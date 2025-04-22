@@ -1,0 +1,35 @@
+.wrapper {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textButton {
+  height: 30px;
+  background: none;
+  border: 3px solid #000000;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textButton:hover {
+  color: white;
+  border-color: white;
+}
+
+.textButton:focus {
+  outline: none;
+}
+
+.active {
+  color: #d8d8d8;
+  /* :hover와 동일한 스타일 */
+}

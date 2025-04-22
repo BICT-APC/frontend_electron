@@ -1,0 +1,82 @@
+.container {
+  padding: 50px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: solid 1px;
+  border: solid 1px black;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.selectWrapper {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  color: black;
+}
+
+.select:hover,
+.select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.sliderWrapper {
+  margin-bottom: 20px;
+}
+
+.slider {
+  width: 100%;
+  height: 8px;
+  background: #ddd;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider:hover {
+  background: #ccc;
+}
+
+.saveButton {
+  background-color: #286ab1;
+  color: white;
+}
