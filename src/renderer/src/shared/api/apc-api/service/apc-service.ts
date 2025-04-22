@@ -3,7 +3,6 @@ import { GET_APC_CONFIG_BY_CCTV_ID, PUT_APC_RULE_LINE_BY_CCTV_ID } from '../../.
 import { RequestPutRuleLineDto } from '../dto/request-put-rule-line-dto'
 import { ResponseApcConfigDto } from '../dto/response-apc-config-dto'
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const apcService = (apcClient: AxiosInstance) => {
   const getApcConfigByCctvId = async (cctvId: number): Promise<ResponseApcConfigDto> => {
     // eslint-disable-next-line no-useless-catch
