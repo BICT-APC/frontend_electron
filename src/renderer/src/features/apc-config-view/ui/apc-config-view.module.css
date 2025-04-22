@@ -1,0 +1,62 @@
+.configContainer {
+  padding: 20px;
+  background-color: #f5f8ff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.configHeader {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.configItem {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+}
+
+.configLabel {
+  font-weight: bold;
+  min-width: 120px;
+  color: #34495e;
+}
+
+.configValue {
+  color: #333;
+  flex: 1;
+}
+
+.ruleLineList {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.ruleLineItem {
+  background-color: #e6f0ff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.coordsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.coordPoint {
+  background-color: #d4e6ff;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-size: 0.85rem;
+}

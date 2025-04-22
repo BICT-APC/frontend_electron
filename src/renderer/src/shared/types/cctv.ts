@@ -13,5 +13,5 @@ export interface Area {
   id: number
   iaiIdx: number
   name: string
-  cctvIdListL: number[]
+  cctvIdList: number[]
 }
