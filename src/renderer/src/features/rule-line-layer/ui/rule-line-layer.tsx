@@ -1,14 +1,14 @@
-import { useRef } from 'react'
-import { Circle, Layer, Line, Rect, Stage, Arrow } from 'react-konva'
+// ✅ rule-line-layer.tsx ROI 구조 반영하여 Group 단위로 수정
+import { useRef, useState } from 'react'
+import { Circle, Group, Layer, Line, Rect, Stage, Arrow } from 'react-konva'
 import { cctvConfigStore } from '../../cctv-config-button/model/cctv-config-store'
 import { cctvSelectStore } from '../../cctv-selecet-layer/model/cctv-selecet-store'
 import styles from './rule-line-layer.module.css'
 import { useResizeObserver } from 'usehooks-ts'
 import { useRuleLine } from '../lib/use-rule-line'
 import { ruleLineCallback } from '../lib/rule-line-callback'
-import { ApcConfig } from '../../../shared/types/apc'
+import { ApcConfig, RuleLine } from '../../../shared/types/apc'
 import Konva from 'konva'
-import { ruleLineStore } from '../model/rule-line-store'
 
 interface RuleLineLayerProps {
   apcConfig: ApcConfig
@@ -17,42 +17,58 @@ interface RuleLineLayerProps {
 export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
   const layerRef = useRef<Konva.Layer | null>(null)
   const rectRef = useRef<Konva.Rect | null>(null)
-  const lineRef = useRef<Konva.Line | null>(null)
+  const groupRefs = useRef<(Konva.Group | null)[]>([])
   const circleRefs = useRef<(Konva.Circle | null)[]>([])
 
-  const { cctvId, ruleLineList } = apcConfig;
-
+  const [reSizedLineList, setReSizedLineList] = useState<RuleLine[] | null>(null)
+  const [isCreating, setIsCreating] = useState<number | null>(null)
+  const [selectedLine, setSelectedLine] = useState<number | null>(null)
+  const [onPointDrag, setOnPointDrag] = useState<boolean>(false)
+  
+  const { cctvId, ruleLineList } = apcConfig
   const { selectedCctvId } = cctvSelectStore()
   const { isRuleLineSetting } = cctvConfigStore()
-  const { 
-    reSizedLineList,
-    isCreating,
-    selectedLine
-  } = ruleLineStore();
-
+  
   const ref = useRef<HTMLDivElement | null>(null)
   const { width = 0, height = 0 } = useResizeObserver({ ref: ref as React.RefObject<HTMLElement> })
 
+  
   const {
     backgroundClickHandler,
     lineClickHandler,
     pointDragMoveHandler,
-    pointDragEndHandler,
     pointDoubleClickHandler,
-    lineDragMoveHandler,
-    lineDragEndHandler,
-    arrowRef, // Arrow 참조 추가
-  } = ruleLineCallback()
+    onDragEndHandler,
+    arrowRef
+  } = ruleLineCallback({
+    states: {
+      reSizedLineList,
+      setReSizedLineList,
+      isCreating,
+      setIsCreating,
+      selectedLine,
+      setSelectedLine,
+      onPointDrag,
+      setOnPointDrag
+    }
+  })
 
   useRuleLine({
     ruleLineList,
     cctvId,
     size: { width, height },
-    refs: { layerRef, rectRef, lineRef, circleRefs },
+    refs: { layerRef, rectRef, groupRefs, circleRefs },
+    states: {
+      reSizedLineList,
+      setReSizedLineList,
+      isCreating,
+      setIsCreating,
+      selectedLine,
+      setSelectedLine
+    }
   })
 
   const stroke = '#ffff00'
-  // const strokeWidth = selectedCctvId === cctvId ? (selectedLine ? 4 : 2) : 1/
 
   const getArrowPoints = (line: any[]) => {
     if (line.length < 2) {
@@ -72,6 +88,8 @@ export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
     return [midX, midY, midX + ndx, midY + ndy]
   }
 
+  
+
   return (
     <div
       className={styles.wrapper}
@@ -88,23 +106,34 @@ export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
             fill="transparent"
             onClick={backgroundClickHandler}
           />
-
           {reSizedLineList?.map((lineObj, lineIndex) => (
-            <>
+            <Group
+              ref={(ref) => {groupRefs.current[lineIndex] = ref}}
+              key={`${cctvId}-group-${lineIndex}`}
+              draggable={!isCreating && selectedLine === lineIndex}
+              onClick={() => lineClickHandler(lineIndex)}
+              onDragEnd={(e) => onDragEndHandler(e, lineIndex)}
+            >
               <Line
-                key={`line-${cctvId}-${lineIndex}`}
                 points={lineObj.ruleLine.map((p) => [p.x, p.y]).flat()}
                 stroke={stroke}
                 strokeWidth={selectedLine === lineIndex ? 4 : 2}
                 hitStrokeWidth={10}
-                draggable={!isCreating}
                 onClick={() => lineClickHandler(lineIndex)}
-                onDragMove={(e) => lineDragMoveHandler(e, lineIndex)}
-                onDragEnd={(e) => lineDragEndHandler(e, lineIndex)}
+                onDblClick={() => {
+                  const updated = [...reSizedLineList]
+                  updated.splice(lineIndex, 1)
+                  setReSizedLineList(updated)
+                  setSelectedLine(null)
+                  setIsCreating(null)
+                }}
               />
-              {(selectedLine === lineIndex || isCreating) &&
+              {(isCreating === lineIndex || selectedLine === lineIndex ) &&
                 lineObj.ruleLine.map((p, i) => (
                   <Circle
+                    ref={(ref) => {
+                      circleRefs.current[i] = ref
+                    }}
                     key={`circle-${cctvId}-${lineIndex}-${i}`}
                     x={p.x}
                     y={p.y}
@@ -113,7 +142,7 @@ export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
                     fill="#fff"
                     draggable
                     onDragMove={(e) => pointDragMoveHandler(e, i, lineIndex)}
-                    onDragEnd={(e) => pointDragEndHandler(e, i, lineIndex)}
+                    // onDragEnd={(e) => pointDragEndHandler(e, i, lineIndex)}
                     onDblClick={(e) => pointDoubleClickHandler(e, i, lineIndex)}
                   />
                 ))}
@@ -128,7 +157,7 @@ export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
                   fill={stroke}
                 />
               )}
-            </>
+            </Group>
           ))}
         </Layer>
       </Stage>

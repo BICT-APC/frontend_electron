@@ -12,13 +12,14 @@ interface RoiLayerProps {
   humanDetectConfig: HumanDetectConfig
 }
 export const RoiLayer = ({ humanDetectConfig }: RoiLayerProps) => {
-  const cctvId = humanDetectConfig.cctvId
+  const { cctvId } = humanDetectConfig
 
   const { selectedCctvId } = cctvSelectStore()
   const { isRoiSetting } = cctvConfigStore()
 
-  const ref = useRef(null)
-  const { width = 0, height = 0 } = useResizeObserver({ ref })
+  const ref = useRef<HTMLDivElement>(null);
+  
+  const { width = 0, height = 0 } = useResizeObserver({ ref: ref as React.RefObject<HTMLElement> })
 
   const {
     backgroundClickHandler,

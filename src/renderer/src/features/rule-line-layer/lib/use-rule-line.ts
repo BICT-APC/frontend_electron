@@ -5,7 +5,6 @@ import { cctvConfigStore } from '../../cctv-config-button/'
 import { RuleLine } from '../../../shared/types/apc'
 import { updateRuleLine } from '../../../shared/api'
 import { apcConfigStore } from '../../../entities/apc/apc-config-store'
-import { ruleLineStore } from '../model/rule-line-store'
 
 interface UseRuleLine {
   ruleLineList: RuleLine[] | undefined
@@ -14,27 +13,34 @@ interface UseRuleLine {
   refs: {
     layerRef: React.RefObject<Konva.Layer | null>
     rectRef: React.RefObject<Konva.Rect | null>
-    lineRef: React.RefObject<Konva.Line | null>
+    groupRefs: React.RefObject<(Konva.Group | null)[]>
     circleRefs: React.RefObject<(Konva.Circle | null)[]>
+  },
+  states: {
+    reSizedLineList: RuleLine[] | null,
+    setReSizedLineList: React.Dispatch<React.SetStateAction<RuleLine[] | null>>
+    isCreating: number | null,
+    setIsCreating: React.Dispatch<React.SetStateAction<number | null>>,
+    selectedLine: number | null,
+    setSelectedLine: React.Dispatch<React.SetStateAction<number | null>>
   }
 }
 
-export const useRuleLine = ({ ruleLineList, cctvId, size, refs }: UseRuleLine) => {
+export const useRuleLine = ({ ruleLineList, cctvId, size, refs, states }: UseRuleLine) => {
   const { width, height } = size
-  const originalWidth = 1920
-  const originalHeight = 1080
-
-  const { layerRef, rectRef, lineRef, circleRefs } = refs
-
-  const {
+  const { 
     reSizedLineList,
     setReSizedLineList,
     isCreating,
     setIsCreating,
     selectedLine,
     setSelectedLine
-  } = ruleLineStore();
-  const { ruleLineSaveFlag, setRuleLineSaveFlag } = cctvConfigStore();
+  } = states
+  const originalWidth = 1920
+  const originalHeight = 1080
+
+  const { layerRef, rectRef, groupRefs, circleRefs } = refs
+  const { isRuleLineSetting, ruleLineSaveFlag, setRuleLineSaveFlag } = cctvConfigStore();
   const { selectedCctvId } = cctvSelectStore()
   const { apcConfigList, setApcConfigList } = apcConfigStore()
 
@@ -52,23 +58,37 @@ export const useRuleLine = ({ ruleLineList, cctvId, size, refs }: UseRuleLine) =
         orderIndex: i
       }))
     }))
-
     setReSizedLineList(resizedList)
-    setIsCreating(false)
+    setIsCreating(null)
     setSelectedLine(null)
-  }, [ruleLineList, width, height, selectedCctvId])
+  }, [ruleLineList, width, height, selectedCctvId, ruleLineSaveFlag, isRuleLineSetting])
 
   useEffect(() => {
     if (!layerRef.current) {
       return
     }
+  
+    // 항상 레이어 맨 위로 올림
     layerRef.current.moveToTop()
-    if (selectedLine) {
+  
+    // 선택된 선이 있을 경우
+    if (selectedLine !== null) {
       rectRef.current?.moveToTop()
-      lineRef.current?.moveToTop()
+      groupRefs.current[selectedLine]?.moveToTop()
       circleRefs.current.forEach((circle) => circle?.moveToTop())
+    } 
+    // 새로 생성 중인 경우
+    else if (isCreating) {
+      rectRef.current?.moveToTop()
+      groupRefs.current.forEach((group) => group?.moveToTop())
+      circleRefs.current.forEach((circle) => circle?.moveToTop())
+    } 
+    // 아무 것도 선택 안된 경우
+    else {
+      rectRef.current?.moveToTop()
+      groupRefs.current.forEach((group) => group?.moveToTop())
     }
-  }, [selectedLine, isCreating])
+  }, [selectedLine, isCreating, groupRefs, circleRefs])
 
   useEffect(() => {
     if (!ruleLineSaveFlag) {
@@ -101,4 +121,17 @@ export const useRuleLine = ({ ruleLineList, cctvId, size, refs }: UseRuleLine) =
     save()
     setRuleLineSaveFlag(false)
   }, [ruleLineSaveFlag])
+
+  useEffect(() => {
+    if (!reSizedLineList) {
+      return
+    }
+  
+    const filtered = reSizedLineList.filter(line => line.ruleLine.length > 0)
+    if (filtered.length !== reSizedLineList.length) {
+      setReSizedLineList(filtered)
+    }
+  }, [reSizedLineList])
+
+
 }
