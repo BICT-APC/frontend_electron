@@ -6,7 +6,10 @@ export const MainPage = () => {
   return (
     <div className={styles.wrapper}>
       <TopNavigation></TopNavigation>
+
       <ViewerContainer></ViewerContainer>
+      
+
     </div>
   )
 }
