@@ -27,7 +27,7 @@ export const ruleLineCallback = () => {
     const { x, y } = pointer
 
     if (selectedLine === null) {
-      if (reSizedLineList === null) {
+      if ( reSizedLineList === null ) {
         const newLine = [{ x, y, orderIndex: 0 }]
         setReSizedLineList([{ ruleLine: newLine }])
         setSelectedLine(0)
