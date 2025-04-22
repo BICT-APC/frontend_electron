@@ -9,7 +9,7 @@ export function AuthRoute({ children }: { children: JSX.Element }) {
     const checkToken = async () => {
       try {
         // localStorage에서 토큰 삭제 (기존 토큰 정리)
-        localStorage.removeItem('accessToken')
+        // localStorage.removeItem('accessToken')
 
         // Electron 세션에서 토큰 확인
         const token = await window.electronToken.getToken()

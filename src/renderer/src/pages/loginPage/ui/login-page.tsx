@@ -5,7 +5,7 @@ import styles from './login-page.module.css'
 export const LoginPage = () => {
   useEffect(() => {
     // 로그인 페이지가 로드될 때 localStorage에서 토큰 삭제
-    localStorage.removeItem('accessToken')
+    // localStorage.removeItem('accessToken')
   }, [])
 
   return (
