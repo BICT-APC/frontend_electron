@@ -2,102 +2,79 @@ import { useEffect } from 'react'
 import Konva from 'konva'
 import { cctvSelectStore } from '../../cctv-selecet-layer/'
 import { cctvConfigStore } from '../../cctv-config-button/'
-import { ApcConfig, RuleLinePoints } from '../../../shared/types/apc'
-import { updateRuleLineCctvId } from '../../../shared/api'
+import { RuleLine } from '../../../shared/types/apc'
+import { updateRuleLine } from '../../../shared/api'
 import { apcConfigStore } from '../../../entities/apc/apc-config-store'
+import { ruleLineStore } from '../model/rule-line-store'
 
 interface UseRuleLine {
-  ruleLine: RuleLinePoints[] | undefined
+  ruleLineList: RuleLine[] | undefined
   cctvId: number
   size: { width: number; height: number }
   refs: {
-    layerRef: React.MutableRefObject<Konva.Layer | null>
-    rectRef: React.MutableRefObject<Konva.Rect | null>
-    lineRef: React.MutableRefObject<Konva.Line | null>
-    circleRefs: React.MutableRefObject<(Konva.Circle | null)[]>
-  }
-  states: {
-    reSizedLine: RuleLinePoints[] | null
-    setReSizedLine: React.Dispatch<React.SetStateAction<RuleLinePoints[] | null>>
-    isCreating: boolean
-    setIsCreating: React.Dispatch<React.SetStateAction<boolean>>
-    selectedLine: boolean
-    setSelectedLine: React.Dispatch<React.SetStateAction<boolean>>
+    layerRef: React.RefObject<Konva.Layer | null>
+    rectRef: React.RefObject<Konva.Rect | null>
+    lineRef: React.RefObject<Konva.Line | null>
+    circleRefs: React.RefObject<(Konva.Circle | null)[]>
   }
 }
 
-export const useRuleLine = ({ ruleLine, cctvId, size, refs, states }: UseRuleLine) => {
+export const useRuleLine = ({ ruleLineList, cctvId, size, refs }: UseRuleLine) => {
   const { width, height } = size
   const originalWidth = 1920
   const originalHeight = 1080
+
   const { layerRef, rectRef, lineRef, circleRefs } = refs
-  const { reSizedLine, setReSizedLine, isCreating, setIsCreating, selectedLine, setSelectedLine } =
-    states
-  const { isRuleLineSetting, ruleLineSaveFlag, setRuleLineSaveFlag } = cctvConfigStore()
+
+  const {
+    reSizedLineList,
+    setReSizedLineList,
+    isCreating,
+    setIsCreating,
+    selectedLine,
+    setSelectedLine
+  } = ruleLineStore();
+  const { ruleLineSaveFlag, setRuleLineSaveFlag } = cctvConfigStore();
   const { selectedCctvId } = cctvSelectStore()
-  // const { apcConfigList, setApcConfigList } = apcConfigStore()
+  const { apcConfigList, setApcConfigList } = apcConfigStore()
 
   useEffect(() => {
-    if (!ruleLine) {
-      setReSizedLine(null)
-      setIsCreating(false)
-      setSelectedLine(false)
+    if (!ruleLineList) {
       return
     }
-
     const scaleX = width / originalWidth
     const scaleY = height / originalHeight
-    const newReSizedLine = ruleLine.map((point, index) => ({
-      x: point.x * scaleX,
-      y: point.y * scaleY,
-      orderIndex: index
+
+    const resizedList = ruleLineList.map((lineObj) => ({
+      ruleLine: lineObj.ruleLine.map((p, i) => ({
+        x: p.x * scaleX,
+        y: p.y * scaleY,
+        orderIndex: i
+      }))
     }))
-    setReSizedLine(newReSizedLine)
+
+    setReSizedLineList(resizedList)
     setIsCreating(false)
-    setSelectedLine(false)
-  }, [
-    ruleLine,
-    selectedCctvId,
-    width,
-    height,
-    isRuleLineSetting,
-    setReSizedLine,
-    setIsCreating,
-    setSelectedLine
-  ])
+    setSelectedLine(null)
+  }, [ruleLineList, width, height, selectedCctvId])
 
   useEffect(() => {
     if (!layerRef.current) {
-      setSelectedLine(false)
-      setIsCreating(false)
       return
     }
-
     layerRef.current.moveToTop()
-    if (selectedLine || isCreating) {
-      if (rectRef.current) rectRef.current.moveToTop()
-      if (lineRef.current) lineRef.current.moveToTop()
+    if (selectedLine) {
+      rectRef.current?.moveToTop()
+      lineRef.current?.moveToTop()
       circleRefs.current.forEach((circle) => circle?.moveToTop())
     }
-  }, [
-    selectedLine,
-    isCreating,
-    layerRef,
-    rectRef,
-    lineRef,
-    circleRefs,
-    setSelectedLine,
-    setIsCreating
-  ])
-
-  // const parseTimeToObject = (timeStr: string): { hours: number; minutes: number; seconds: number } => {
-  //   const [hours, minutes, seconds] = timeStr.split(':').map(Number);
-  //   return { hours, minutes, seconds };
-  // };
+  }, [selectedLine, isCreating])
 
   useEffect(() => {
-    if (!ruleLineSaveFlag) return
-    if (!reSizedLine || reSizedLine?.length < 2) {
+    if (!ruleLineSaveFlag) {
+      return
+    }
+    if (!reSizedLineList || reSizedLineList.length === 0) {
       setRuleLineSaveFlag(false)
       return
     }
@@ -105,29 +82,23 @@ export const useRuleLine = ({ ruleLine, cctvId, size, refs, states }: UseRuleLin
     const scaleX = width / originalWidth
     const scaleY = height / originalHeight
 
-    const newLine = reSizedLine.map((ruleLinePoints, index) => ({
-      x: ruleLinePoints.x / scaleX,
-      y: ruleLinePoints.y / scaleY,
-      orderIndex: index
+    const newLineList = reSizedLineList.map((ruleLineObj) => ({
+      ruleLine: ruleLineObj.ruleLine.map((p, i) => ({
+        x: p.x / scaleX,
+        y: p.y / scaleY,
+        orderIndex: i
+      }))
     }))
 
-    const saveRegionApi = async (newLine: RuleLinePoints[]) => {
-      console.log(newLine, cctvId)
-      // const result = await updateRuleLineCctvId(cctvId, { ruleLineList: newLine })
-      // const newApcConfigList: ApcConfig[] = apcConfigList.map((apcConfig) => {
-      //   if (apcConfig.cctvId === result.cctvId) {
-      //     return {
-      //       ...result
-
-      //     }
-      //   } else {
-      //     return apcConfig
-      //   }
-      // })
-      // setApcConfigList(newApcConfigList)
+    const save = async () => {
+      const result = await updateRuleLine(cctvId, { ruleLineList: newLineList })
+      const updated = apcConfigList.map((cfg) =>
+        cfg.cctvId === result.cctvId ? { ...result } : cfg
+      )
+      setApcConfigList(updated)
     }
 
-    saveRegionApi(newLine)
+    save()
     setRuleLineSaveFlag(false)
-  }, [ruleLineSaveFlag, setRuleLineSaveFlag])
+  }, [ruleLineSaveFlag])
 }

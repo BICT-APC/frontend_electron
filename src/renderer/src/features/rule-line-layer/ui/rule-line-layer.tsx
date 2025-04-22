@@ -7,20 +7,30 @@ import { useResizeObserver } from 'usehooks-ts'
 import { useRuleLine } from '../lib/use-rule-line'
 import { ruleLineCallback } from '../lib/rule-line-callback'
 import { ApcConfig } from '../../../shared/types/apc'
+import Konva from 'konva'
+import { ruleLineStore } from '../model/rule-line-store'
 
 interface RuleLineLayerProps {
   apcConfig: ApcConfig
 }
 
 export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
-  const ruleLine = apcConfig.ruleLine
-  const cctvId = apcConfig.cctvId
+  const layerRef = useRef<Konva.Layer | null>(null)
+  const rectRef = useRef<Konva.Rect | null>(null)
+  const lineRef = useRef<Konva.Line | null>(null)
+  const circleRefs = useRef<(Konva.Circle | null)[]>([])
+
+  const { cctvId, ruleLineList } = apcConfig;
 
   const { selectedCctvId } = cctvSelectStore()
   const { isRuleLineSetting } = cctvConfigStore()
+  const { 
+    reSizedLineList,
+    isCreating,
+    selectedLine
+  } = ruleLineStore();
 
   const ref = useRef<HTMLDivElement | null>(null)
-
   const { width = 0, height = 0 } = useResizeObserver({ ref: ref as React.RefObject<HTMLElement> })
 
   const {
@@ -31,60 +41,35 @@ export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
     pointDoubleClickHandler,
     lineDragMoveHandler,
     lineDragEndHandler,
-    layerRef,
-    rectRef,
-    lineRef,
-    circleRefs,
     arrowRef, // Arrow 참조 추가
-    reSizedLine,
-    setReSizedLine,
-    isCreating,
-    setIsCreating,
-    selectedLine,
-    setSelectedLine
   } = ruleLineCallback()
 
   useRuleLine({
-    ruleLine,
+    ruleLineList,
     cctvId,
     size: { width, height },
     refs: { layerRef, rectRef, lineRef, circleRefs },
-    states: {
-      reSizedLine,
-      setReSizedLine,
-      isCreating,
-      setIsCreating,
-      selectedLine,
-      setSelectedLine
-    }
   })
 
   const stroke = '#ffff00'
-  const strokeWidth = selectedCctvId === cctvId ? (selectedLine ? 4 : 2) : 1
+  // const strokeWidth = selectedCctvId === cctvId ? (selectedLine ? 4 : 2) : 1/
 
-  const getArrowPoints = (dx = 0, dy = 0) => {
-    if (!reSizedLine || reSizedLine.length < 2) return null
-
-    const pointA = reSizedLine[0]
-    const pointB = reSizedLine[1]
-    const midX = (pointA.x + dx + pointB.x + dx) / 2
-    const midY = (pointA.y + dy + pointB.y + dy) / 2
-
-    const abX = pointB.x - pointA.x
-    const abY = pointB.y - pointA.y
-
-    const arrowDX = abY // 시계 방향 90도 회전
+  const getArrowPoints = (line: any[]) => {
+    if (line.length < 2) {
+      return null
+    }
+    const [a, b] = line
+    const midX = (a.x + b.x) / 2
+    const midY = (a.y + b.y) / 2
+    const abX = b.x - a.x
+    const abY = b.y - a.y
+    const arrowDX = abY
     const arrowDY = -abX
-
-    const arrowLength = 40
-    const magnitude = Math.sqrt(arrowDX ** 2 + arrowDY ** 2) || 1
-    const normalizedDX = (arrowDX / magnitude) * arrowLength
-    const normalizedDY = (arrowDY / magnitude) * arrowLength
-
-    const arrowEndX = midX + normalizedDX
-    const arrowEndY = midY + normalizedDY
-
-    return [midX, midY, arrowEndX, arrowEndY]
+    const len = 40
+    const mag = Math.sqrt(arrowDX ** 2 + arrowDY ** 2) || 1
+    const ndx = (arrowDX / mag) * len
+    const ndy = (arrowDY / mag) * len
+    return [midX, midY, midX + ndx, midY + ndy]
   }
 
   return (
@@ -103,50 +88,48 @@ export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
             fill="transparent"
             onClick={backgroundClickHandler}
           />
-          {reSizedLine && reSizedLine.length > 0 && (
+
+          {reSizedLineList?.map((lineObj, lineIndex) => (
             <>
               <Line
-                ref={lineRef}
-                points={reSizedLine.map((point) => [point.x, point.y]).flat()}
+                key={`line-${cctvId}-${lineIndex}`}
+                points={lineObj.ruleLine.map((p) => [p.x, p.y]).flat()}
                 stroke={stroke}
-                strokeWidth={strokeWidth}
+                strokeWidth={selectedLine === lineIndex ? 4 : 2}
                 hitStrokeWidth={10}
                 draggable={!isCreating}
-                onClick={lineClickHandler}
-                onDragMove={lineDragMoveHandler} // Circle과 Arrow 실시간 업데이트
-                onDragEnd={lineDragEndHandler}
+                onClick={() => lineClickHandler(lineIndex)}
+                onDragMove={(e) => lineDragMoveHandler(e, lineIndex)}
+                onDragEnd={(e) => lineDragEndHandler(e, lineIndex)}
               />
-              {(selectedLine || isCreating) &&
-                reSizedLine.map((point, index) => (
+              {(selectedLine === lineIndex || isCreating) &&
+                lineObj.ruleLine.map((p, i) => (
                   <Circle
-                    ref={(ref) => {
-                      circleRefs.current[index] = ref
-                    }}
-                    key={`${cctvId}-${index}-circle`}
-                    x={point.x}
-                    y={point.y}
+                    key={`circle-${cctvId}-${lineIndex}-${i}`}
+                    x={p.x}
+                    y={p.y}
                     radius={10}
                     stroke={stroke}
                     fill="#fff"
                     draggable
-                    onDragMove={(event) => pointDragMoveHandler(event, index)}
-                    onDragEnd={pointDragEndHandler}
-                    onDblClick={(event) => pointDoubleClickHandler(event, index)}
+                    onDragMove={(e) => pointDragMoveHandler(e, i, lineIndex)}
+                    onDragEnd={(e) => pointDragEndHandler(e, i, lineIndex)}
+                    onDblClick={(e) => pointDoubleClickHandler(e, i, lineIndex)}
                   />
                 ))}
-              {getArrowPoints() && (
+              {getArrowPoints(lineObj.ruleLine) && (
                 <Arrow
-                  ref={arrowRef} // Arrow 참조 추가
-                  points={getArrowPoints()!}
+                  ref={arrowRef}
+                  points={getArrowPoints(lineObj.ruleLine)!}
                   stroke={stroke}
-                  strokeWidth={strokeWidth}
+                  strokeWidth={2}
                   pointerLength={10}
                   pointerWidth={10}
                   fill={stroke}
                 />
               )}
             </>
-          )}
+          ))}
         </Layer>
       </Stage>
     </div>

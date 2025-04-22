@@ -3,7 +3,7 @@ import Konva from 'konva'
 import { cctvSelectStore } from '../../cctv-selecet-layer/model/cctv-selecet-store'
 import { cctvConfigStore } from '../../cctv-config-button/model/cctv-config-store'
 import { HumanDetectConfig, Roi } from '../../../shared/types/human-detect'
-import { putHumanDetectRoiByCctvId } from '../../../shared/api'
+import { updateHumanDetectConfig } from '../../../shared/api'
 import { humanDetectConfigStore } from '../../../entities/human-detect/human-detect-config-stroe'
 
 interface UseRoi {
@@ -82,7 +82,7 @@ export const useRoi = ({ humanDetectConfig, size, refs, states }: UseRoi) => {
       }))
 
     const saveRegionApi = async (newRegion: Roi[]) => {
-      const results = await putHumanDetectRoiByCctvId(cctvId, {
+      const results = await updateHumanDetectConfig(cctvId, {
         conf,
         iou,
         imgsz,

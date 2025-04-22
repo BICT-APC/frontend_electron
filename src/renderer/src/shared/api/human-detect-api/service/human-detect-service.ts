@@ -1,18 +1,18 @@
 import { AxiosInstance } from 'axios'
 import {
-  GET_HUMAN_DETECT_CONFIG_BY_CCTV,
-  PUT_HUMAN_DETECT_CONFIG_BY_CCTV
+  READ_HUMAN_DETECT_CONFIG,
+  UPDATE_HUMAN_DETECT_CONFIG
 } from '../../../constants/paths'
 import { ResponseHumanDetectConfigDto } from '../dto/response-human-detect-config-dto'
 import { RequestPutHumanDetectConfigDto } from '../dto/request-put-human-detect-config-dto'
 
 export const humanDetectService = (humanDetectClient: AxiosInstance) => {
-  const getHumanDetectConfigByCctvId = async (
+  const readHumanDetectConfig = async (
     cctvId: number
   ): Promise<ResponseHumanDetectConfigDto> => {
     try {
       const response = await humanDetectClient.get<ResponseHumanDetectConfigDto>(
-        GET_HUMAN_DETECT_CONFIG_BY_CCTV,
+        READ_HUMAN_DETECT_CONFIG,
         {
           params: {
             cctvId
@@ -25,14 +25,14 @@ export const humanDetectService = (humanDetectClient: AxiosInstance) => {
     }
   }
 
-  const putHumanDetectRoiByCctvId = async (
+  const updateHumanDetectConfig = async (
     cctvId: number,
     configData: RequestPutHumanDetectConfigDto
   ): Promise<ResponseHumanDetectConfigDto> => {
     try {
       console.log(configData)
-      const response = await humanDetectClient.put<ResponseHumanDetectConfigDto>(
-        PUT_HUMAN_DETECT_CONFIG_BY_CCTV,
+      const response = await humanDetectClient.post<ResponseHumanDetectConfigDto>(
+        UPDATE_HUMAN_DETECT_CONFIG,
         configData,
         {
           params: {
@@ -48,7 +48,7 @@ export const humanDetectService = (humanDetectClient: AxiosInstance) => {
   }
 
   return {
-    getHumanDetectConfigByCctvId,
-    putHumanDetectRoiByCctvId
+    readHumanDetectConfig,
+    updateHumanDetectConfig
   }
 }

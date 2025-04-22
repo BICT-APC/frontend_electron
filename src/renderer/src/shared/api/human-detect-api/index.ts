@@ -9,5 +9,7 @@ const humanDetectClient = axios.create({
   }
 })
 
-export const { getHumanDetectConfigByCctvId, putHumanDetectRoiByCctvId } =
-  humanDetectService(humanDetectClient)
+export const {
+  readHumanDetectConfig,
+  updateHumanDetectConfig
+} = humanDetectService(humanDetectClient)

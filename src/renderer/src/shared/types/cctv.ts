@@ -6,11 +6,12 @@ export interface Cctv {
   userName: string | null
   password: string | null
   rtspUrl: string
-  area: Area
+  areaId: number
 }
 
 export interface Area {
   id: number
   iaiIdx: number
   name: string
+  cctvIdListL: number[]
 }

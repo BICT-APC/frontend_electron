@@ -9,4 +9,7 @@ const cctvClient = axios.create({
   }
 })
 
-export const { getAllCctv } = cctvService(cctvClient)
+export const {
+  readAllArea,
+  readAllCctv
+} = cctvService(cctvClient)

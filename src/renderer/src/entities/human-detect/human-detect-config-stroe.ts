@@ -4,6 +4,7 @@ import { HumanDetectConfig } from '../../shared/types/human-detect'
 
 interface HumanDetectConfigStore {
   humanDetectConfigList: HumanDetectConfig[]
+  
   setHumanDetectConfigList: (humanDetectConfigList: HumanDetectConfig[]) => void
 }
 

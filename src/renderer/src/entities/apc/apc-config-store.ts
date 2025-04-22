@@ -14,7 +14,10 @@ export const apcConfigStore = create<ApcConfigStore>()(
   devtools(
     (set) => ({
       apcConfigList: [],
-      setApcConfigList: (apcConfigList: ApcConfig[]) => set({ apcConfigList: apcConfigList })
+      eventConfigList: [],
+
+      setApcConfigList: (apcConfigList: ApcConfig[]) => set({ apcConfigList: apcConfigList }),
+      setEventConfigList: (eventConfigList: EventConfig[]) => set({ eventConfigList: eventConfigList })
     }),
     { name: 'ApcConfigStore' }
   )
