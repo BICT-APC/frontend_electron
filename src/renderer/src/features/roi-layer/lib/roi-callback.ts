@@ -19,13 +19,20 @@ export const roiCallback = () => {
 
   const backgroundClickHandler = useCallback(
     (event: KonvaEventObject<MouseEvent>) => {
-      if (!reSizedRegion) return
-      if (selectedPolyIndex !== null) setSelectedPolyIndex(null)
-      else {
-        if (!reSizedRegion) return
+      if (!reSizedRegion) {
+        return
+      }
+      if (selectedPolyIndex !== null) {
+        setSelectedPolyIndex(null)
+      } else {
+        if (!reSizedRegion) {
+          return
+        }
         const stage = event.target.getStage()
         const clickPosition = stage?.getPointerPosition()
-        if (!clickPosition) return
+        if (!clickPosition) {
+          return
+        }
         const clickX = clickPosition.x
         const clickY = clickPosition.y
         let newRegion = [...reSizedRegion]
@@ -33,40 +40,39 @@ export const roiCallback = () => {
           newRegion.push({ roi: [{ x: clickX, y: clickY, orderIndex: 0 }] })
           setReSizedRegion(newRegion)
           setCreatingPolyIndex(reSizedRegion.length)
+        }
+        else if (newRegion[creatingPolyIndex].roi.length === 1) {
+          newRegion[creatingPolyIndex].roi.push({ x: clickX, y: clickY, orderIndex: 1 })
+          setReSizedRegion(newRegion)
         } else {
-          if (newRegion[creatingPolyIndex].roi.length === 1) {
-            newRegion[creatingPolyIndex].roi.push({ x: clickX, y: clickY, orderIndex: 1 })
-            setReSizedRegion(newRegion)
-          } else {
-            let closestIndex = -1
-            let minDistance = Infinity
-            for (let i = 0; i < newRegion[creatingPolyIndex].roi.length; i++) {
-              const startPoint = newRegion[creatingPolyIndex].roi[i]
-              const nextIndex = i + 1 >= newRegion[creatingPolyIndex].roi.length ? 0 : i + 1
-              const endPoint = newRegion[creatingPolyIndex].roi[nextIndex]
-              const distance = pointToSegmentDistance(clickX, clickY, startPoint, endPoint)
-              if (distance < minDistance) {
-                minDistance = distance
-                closestIndex = i
-              }
+          let closestIndex = -1
+          let minDistance = Infinity
+          for (let i = 0; i < newRegion[creatingPolyIndex].roi.length; i++) {
+            const startPoint = newRegion[creatingPolyIndex].roi[i]
+            const nextIndex = i + 1 >= newRegion[creatingPolyIndex].roi.length ? 0 : i + 1
+            const endPoint = newRegion[creatingPolyIndex].roi[nextIndex]
+            const distance = pointToSegmentDistance(clickX, clickY, startPoint, endPoint)
+            if (distance < minDistance) {
+              minDistance = distance
+              closestIndex = i
             }
-            if (closestIndex !== -1) {
-              newRegion[creatingPolyIndex].roi.splice(closestIndex + 1, 0, {
-                x: clickX,
-                y: clickY,
-                orderIndex: closestIndex + 1
-              })
-            }
-            ////////////
-            newRegion[creatingPolyIndex].roi = newRegion[creatingPolyIndex].roi.map(
-              (point, index) => ({
-                ...point,
-                orderIndex: index
-              })
-            )
-            /////////////////
-            setReSizedRegion(newRegion)
           }
+          if (closestIndex !== -1) {
+            newRegion[creatingPolyIndex].roi.splice(closestIndex + 1, 0, {
+              x: clickX,
+              y: clickY,
+              orderIndex: closestIndex + 1
+            })
+          }
+          ////////////
+          newRegion[creatingPolyIndex].roi = newRegion[creatingPolyIndex].roi.map(
+            (point, index) => ({
+              ...point,
+              orderIndex: index
+            })
+          )
+          /////////////////
+          setReSizedRegion(newRegion)
         }
       }
     },
@@ -88,7 +94,9 @@ export const roiCallback = () => {
     const len_sq = C * C + D * D
     let param = -1
 
-    if (len_sq !== 0) param = dot / len_sq
+    if (len_sq !== 0) {
+      param = dot / len_sq
+    }
 
     let xx, yy
 
@@ -114,7 +122,9 @@ export const roiCallback = () => {
         setOnPointDrag(false)
         return
       }
-      if (!reSizedRegion) return
+      if (!reSizedRegion) {
+        return
+      }
       let newRegion = [...reSizedRegion]
       newRegion[polyIndex].roi = newRegion[polyIndex].roi.map((point) => ({
         x: point.x + event.target.x(),
@@ -139,7 +149,9 @@ export const roiCallback = () => {
   const polygonClickHandler = useCallback(
     (polyIndex: number) => {
       setSelectedPolyIndex(polyIndex)
-      if (creatingPolyIndex !== null) setCreatingPolyIndex(null)
+      if (creatingPolyIndex !== null) {
+        setCreatingPolyIndex(null)
+      }
     },
     [creatingPolyIndex]
   )
@@ -147,8 +159,11 @@ export const roiCallback = () => {
   const lineSceneFunc = (context: Context, shape: Shape<ShapeConfig>, polygon: RoiPoints[]) => {
     context.beginPath()
     polygon.forEach((point, index) => {
-      if (index === 0) context.moveTo(point.x, point.y)
-      else context.lineTo(point.x, point.y)
+      if (index === 0) {
+        context.moveTo(point.x, point.y)
+      } else {
+        context.lineTo(point.x, point.y)
+      }
     })
     context.closePath()
     context.fillStrokeShape(shape)
@@ -156,11 +171,15 @@ export const roiCallback = () => {
 
   const lineDoubleClickHandler = useCallback(
     (event: KonvaEventObject<MouseEvent>, polyIndex: number) => {
-      if (!reSizedRegion || creatingPolyIndex !== null) return
+      if (!reSizedRegion || creatingPolyIndex !== null) {
+        return
+      }
 
       const stage = event.target.getStage()
       const clickPosition = stage?.getPointerPosition()
-      if (!clickPosition) return
+      if (!clickPosition) {
+        return
+      }
 
       const clickX = clickPosition.x
       const clickY = clickPosition.y
@@ -211,14 +230,17 @@ export const roiCallback = () => {
     const lineLength = Math.hypot(end.x - start.x, end.y - start.y)
     const distanceToStart = Math.hypot(point.x - start.x, point.y - start.y)
     const distanceToEnd = Math.hypot(point.x - end.x, point.y - end.y)
-    const isOnLine = Math.abs(distanceToStart + distanceToEnd - lineLength) <= 3
-    return isOnLine
+    return Math.abs(distanceToStart + distanceToEnd - lineLength) <= 3;
   }
 
   const pointDoubleClickHandler = useCallback(
     (event: KonvaEventObject<MouseEvent>, pointIndex: number, polyIndex: number) => {
-      if (!circleRefs.current[pointIndex]) return
-      if (!reSizedRegion) return
+      if (!circleRefs.current[pointIndex]) {
+        return
+      }
+      if (!reSizedRegion) {
+        return
+      }
       event.cancelBubble = true
       let newRegion = [...reSizedRegion]
       newRegion[polyIndex].roi.splice(pointIndex, 1)
@@ -240,7 +262,9 @@ export const roiCallback = () => {
   const pointDragMoveHandler = useCallback(
     (event: KonvaEventObject<DragEvent>, pointIndex: number, polyIndex: number) => {
       setOnPointDrag(true)
-      if (!reSizedRegion) return
+      if (!reSizedRegion) {
+        return
+      }
       const x = event.target.x()
       const y = event.target.y()
       let newRegion = [...reSizedRegion]

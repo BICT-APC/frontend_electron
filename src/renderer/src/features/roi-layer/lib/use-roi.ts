@@ -49,15 +49,21 @@ export const useRoi = ({ humanDetectConfig, size, refs, states }: UseRoi) => {
 
   ////////////////
   useEffect(() => {
-    if (!reSizedRegion) return
-    if (cctvId !== selectedCctvId) return
+    if (!reSizedRegion) {
+      return
+    }
+    if (cctvId !== selectedCctvId) {
+      return
+    }
 
     const newRegion = reSizedRegion.filter(
       (polygon, index) =>
         polygon.roi.length > 2 && index !== selectedPolyIndex && index !== creatingPolyIndex
     )
 
-    if (reSizedRegion.length === newRegion.length) return
+    if (reSizedRegion.length === newRegion.length) {
+      return
+    }
 
     setReSizedRegion([...newRegion])
 
@@ -67,7 +73,9 @@ export const useRoi = ({ humanDetectConfig, size, refs, states }: UseRoi) => {
   }, [selectedCctvId])
 
   useEffect(() => {
-    if (!roiSaveFlag) return
+    if (!roiSaveFlag) {
+      return
+    }
     const scaleX = width / originalWidth
     const scaleY = height / originalHeight
 
@@ -144,24 +152,35 @@ export const useRoi = ({ humanDetectConfig, size, refs, states }: UseRoi) => {
     layerRef.current.moveToTop()
 
     if (selectedPolyIndex !== null) {
-      if (rectRef.current) rectRef.current.moveToTop()
+      if (rectRef.current) {
+        rectRef.current.moveToTop()
+      }
       groupRefs.current.forEach((item) => {
-        if (item) item.moveToTop()
+        if (item) {
+          item.moveToTop()
+        }
       })
       groupRefs.current[selectedPolyIndex]?.moveToTop()
+
       circleRefs.current.forEach((circleRef) => {
         circleRef?.moveToTop()
       })
     } else if (creatingPolyIndex !== null) {
-      if (rectRef.current) rectRef.current.moveToTop()
+      if (rectRef.current) {
+        rectRef.current.moveToTop()
+      }
       groupRefs.current[creatingPolyIndex]?.moveToTop()
       circleRefs.current.forEach((circleRef) => {
         circleRef?.moveToTop()
       })
     } else {
-      if (rectRef.current) rectRef.current.moveToTop()
+      if (rectRef.current) {
+        rectRef.current.moveToTop()
+      }
       groupRefs.current.forEach((item) => {
-        if (item) item.moveToTop()
+        if (item) {
+          item.moveToTop()
+        }
       })
     }
   }, [

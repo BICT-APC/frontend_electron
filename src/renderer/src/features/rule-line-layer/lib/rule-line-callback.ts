@@ -1,70 +1,98 @@
-// ✅ rule-line-callback.ts 다중 선 기능 완전 구현
-import { useRef } from 'react'
+// ✅ rule-line-callback.ts 다중 선 기능 + ROI 방식 참고 반영
+import { useCallback, useRef } from 'react'
 import { KonvaEventObject } from 'konva/lib/Node'
-import { ruleLineStore } from '../model/rule-line-store'
+import { RuleLine } from '@renderer/shared/types/apc'
 
-export const ruleLineCallback = () => {
+interface RuleLineCallback {
+  states: {
+    reSizedLineList: RuleLine[] | null,
+    setReSizedLineList: React.Dispatch<React.SetStateAction<RuleLine[] | null>>
+    isCreating: number | null,
+    setIsCreating: React.Dispatch<React.SetStateAction<number | null>>,
+    selectedLine: number | null,
+    setSelectedLine: React.Dispatch<React.SetStateAction<number | null>>
+    onPointDrag: boolean,
+    setOnPointDrag: React.Dispatch<React.SetStateAction<boolean>>
+  }
+}
+export const ruleLineCallback = ({states}: RuleLineCallback) => {
   const arrowRef = useRef<any>(null)
 
-  const {
-    isCreating,
+  const { 
     reSizedLineList,
     setReSizedLineList,
+    isCreating,
+    setIsCreating,
     selectedLine,
-    setSelectedLine
-  } = ruleLineStore()
+    setSelectedLine,
+    onPointDrag,
+    setOnPointDrag
+  } = states
 
-  const backgroundClickHandler = (event: KonvaEventObject<MouseEvent>) => {
-    const { reSizedLineList, setReSizedLineList, isCreating, setIsCreating, selectedLine, setSelectedLine } = ruleLineStore.getState()
+  const backgroundClickHandler = useCallback((event: KonvaEventObject<MouseEvent>) => {
+    event.cancelBubble = true
+
     const stage = event.target.getStage()
     if (!stage) {
       return
     }
+
     const pointer = stage.getPointerPosition()
     if (!pointer) {
       return
     }
+
     const { x, y } = pointer
 
     if (selectedLine === null) {
-      if ( reSizedLineList === null ) {
+      // 선 하나도 없을 경우
+      if (!reSizedLineList || reSizedLineList.length === 0) {
         const newLine = [{ x, y, orderIndex: 0 }]
         setReSizedLineList([{ ruleLine: newLine }])
-        setSelectedLine(0)
-        setIsCreating(true)
-      } else {
-        if (isCreating) {
-          const updated = [...reSizedLineList]
-          const currentLine = updated[updated.length - 1].ruleLine
-          if (currentLine.length < 2) {
-            currentLine.push({ x, y, orderIndex: 1 })
-            updated[updated.length - 1] = { ruleLine: currentLine }
-            setReSizedLineList(updated)
-            setIsCreating(false)
-            setSelectedLine(null)
+        setSelectedLine(null)
+        setIsCreating(0) // ← 인덱스 지정
+      } 
+      // 현재 생성 중인 선이 있을 경우 → 점 하나 존재 상태에서 두 번째 점 찍기
+      else if (isCreating !== null) {
+        const updated = [...reSizedLineList]
+        const currentLine = updated[isCreating].ruleLine
+        if (currentLine.length === 1) {
+          currentLine.push({ x, y, orderIndex: 1 })
+          updated[isCreating] = {
+            ruleLine: currentLine.map((p, i) => ({ ...p, orderIndex: i }))
           }
-        } else {
-          const newLine = [{ x, y, orderIndex: 0 }]
-          const updated = [...reSizedLineList, { ruleLine: newLine }]
           setReSizedLineList(updated)
-          setSelectedLine(updated.length - 1)
-          setIsCreating(true)
+          setIsCreating(null)
+          setSelectedLine(updated.length-1)
         }
+      } 
+      // 새 선 생성 시작
+      else {
+        const newLine = [{ x, y, orderIndex: 0 }]
+        const updated = [...reSizedLineList, { ruleLine: newLine }]
+        const newIndex = updated.length - 1
+        setReSizedLineList(updated)
+        setSelectedLine(null)
+        setIsCreating(newIndex)
       }
     } else {
+      // 선택 해제
       setSelectedLine(null)
+    }
+  }, [isCreating, selectedLine, reSizedLineList, setReSizedLineList, setSelectedLine, setIsCreating])
+
+  const lineClickHandler = (index: number) => {
+    if (!isCreating) {
+      setSelectedLine(index)
     }
   }
 
-  const lineClickHandler = (index: number) => {
-    setSelectedLine(index)
-  }
-
-  const pointDragMoveHandler = (
+  const pointDragMoveHandler = useCallback((
     event: KonvaEventObject<DragEvent>,
     pointIndex: number,
     lineIndex: number
   ) => {
+    setOnPointDrag(true)
     const { x, y } = event.target.position()
     if (!reSizedLineList) {
       return
@@ -74,29 +102,36 @@ export const ruleLineCallback = () => {
     targetLine[pointIndex] = { ...targetLine[pointIndex], x, y }
     updated[lineIndex] = { ...updated[lineIndex], ruleLine: targetLine }
     setReSizedLineList(updated)
-  }
-
-  const pointDragEndHandler = (event: KonvaEventObject<DragEvent>, pointIndex: number, lineIndex: number) => {
-    // 포인트 드래그 끝났을 때 동작 (예: 로그 찍기 등)
-    console.log(`Point ${pointIndex} of line ${lineIndex} drag ended at`, event.target.position())
-  }
+  },[reSizedLineList])
 
   const pointDoubleClickHandler = (_event: KonvaEventObject<MouseEvent>, pointIndex: number, lineIndex: number) => {
-    // 포인트 더블클릭 시 삭제
     if (!reSizedLineList) {
       return
     }
     const updated = [...reSizedLineList]
     const targetLine = [...updated[lineIndex].ruleLine]
-    if (targetLine.length <= 2) {
-      return
-    }// 2개 이하는 삭제 불가
     targetLine.splice(pointIndex, 1)
-    updated[lineIndex] = { ...updated[lineIndex], ruleLine: targetLine }
+    if (targetLine.length === 0) {
+      updated.splice(lineIndex, 1)
+      setReSizedLineList(updated)
+      setSelectedLine(null)
+      setIsCreating(null)
+      return
+    }
+    updated[lineIndex] = {
+      ...updated[lineIndex],
+      ruleLine: targetLine.map((p, i) => ({ ...p, orderIndex: i }))
+    }
     setReSizedLineList(updated)
   }
 
-  const lineDragMoveHandler = (event: KonvaEventObject<DragEvent>, lineIndex: number) => {
+  const onDragEndHandler = useCallback(
+    (event: KonvaEventObject<DragEvent>, lineIndex: number) => {
+    if (onPointDrag) {
+      setOnPointDrag(false)
+      return
+    }
+
     const { x: dx, y: dy } = event.target.position()
     if (!reSizedLineList) {
       return
@@ -109,22 +144,15 @@ export const ruleLineCallback = () => {
     }))
     updated[lineIndex] = { ...updated[lineIndex], ruleLine: movedLine }
     setReSizedLineList(updated)
-    event.target.position({ x: 0, y: 0 }) // 위치 초기화 (Konva Drag offset 보정)
-  }
-
-  const lineDragEndHandler = (_event: KonvaEventObject<DragEvent>, lineIndex: number) => {
-    // 라인 이동 완료 시 로그 출력
-    console.log(`Line ${lineIndex} drag ended`)
-  }
+    event.target.position({ x: 0, y: 0 })
+  },[reSizedLineList])
 
   return {
     arrowRef,
     backgroundClickHandler,
     lineClickHandler,
     pointDragMoveHandler,
-    pointDragEndHandler,
     pointDoubleClickHandler,
-    lineDragMoveHandler,
-    lineDragEndHandler
+    onDragEndHandler
   }
-}  
+}
