@@ -15,13 +15,19 @@ export default defineConfig({
         '/cctv-api': {
           target: 'http://192.168.0.185:31000',
           changeOrigin: true,
-        }, '/apc-api': {
+        },
+        '/apc-api': {
           target: 'http://192.168.0.185:31000',
           changeOrigin: true,
-        }, '/human-detect-api': {
+        },
+        '/human-detect-api': {
           target: 'http://192.168.0.185:31000',
           changeOrigin: true,
-        }, 
+        },
+        '/auth-api': {
+          target: 'http://192.168.0.185:31000',
+          changeOrigin: true,
+        },
       }
     },
     resolve: {
