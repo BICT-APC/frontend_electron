@@ -1,5 +1,14 @@
 export const BASE_API_URL = import.meta.env.VITE_BASE_API_URL
 
+// export const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL || `${BASE_API_URL}/auth-api`
+export const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL || `http://localhost:8004/auth-api`
+export const LOGIN = '/api/login'
+export const SIGNUP = '/api/auth/signup'
+export const DELETE_USER = '/api/auth/delete_user'
+export const UPDATE_USER = '/api/auth/update_user'
+export const GET_USER = '/api/auth/get_user'
+export const GET_USERS = '/api/auth/get_users'
+
 export const CCTV_API_URL = import.meta.env.VITE_CCTV_API_URL || `${BASE_API_URL}/cctv-api`
 export const GET_ALL_CCTV = '/api/cctv'
 
