@@ -1,0 +1,86 @@
+.sidebar {
+  width: 240px;
+  background: #d8d8d8;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+}
+
+.header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background: #fff;
+  color: black;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.content {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+li {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.areaGroup {
+  margin-bottom: 1.5rem;
+  border: 1px solid #b9b9b9;
+  border-radius: 8px;
+  padding: 0.75rem 0.25rem 0.25rem 0.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 0.5rem;
+  background: rgba(88, 88, 88, 0.1);
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.areaName {
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: #333;
+}
+.configButton {
+  font-size: 0.95rem;
+  border-radius: 8px;
+  padding: 0.25rem 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  color: #333;
+  background: #a7a8b1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.configButton:hover {
+  background: #333;
+  color: #ffffff;
+}
+
+.apcCount {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.95rem;
+  color: #333;
+  margin-left: 0.5rem;
+  gap: 6px;
+  justify-content: center;
+}
+
+.noCctv {
+  color: #aaa;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}

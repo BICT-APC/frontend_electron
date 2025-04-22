@@ -1,0 +1,62 @@
+.configContainer {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.configHeader {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.configItem {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+}
+
+.configLabel {
+  font-weight: bold;
+  min-width: 100px;
+  color: #555;
+}
+
+.configValue {
+  color: #333;
+  flex: 1;
+}
+
+.roiList {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.roiItem {
+  background-color: #eef2f7;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.coordsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.coordPoint {
+  background-color: #e2e8f0;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-size: 0.85rem;
+}
