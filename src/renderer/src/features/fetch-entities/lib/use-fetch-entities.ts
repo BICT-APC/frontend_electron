@@ -2,7 +2,11 @@ import { useCallback } from 'react'
 import { apcConfigStore } from '../../../entities/apc/apc-config-store'
 import { cctvStore } from '../../../entities/cctv/cctv-store'
 import { humanDetectConfigStore } from '../../../entities/human-detect/human-detect-config-stroe'
-import { getAllCctv, readApcConfigByCctvId, getHumanDetectConfigByCctvId } from '../../../shared/api'
+import {
+  getAllCctv,
+  readApcConfigByCctvId,
+  getHumanDetectConfigByCctvId
+} from '../../../shared/api'
 
 export const useFetchEntities = () => {
   const { setCctvList } = cctvStore()
@@ -70,7 +74,6 @@ export const useFetchEntities = () => {
       } catch (error) {
         console.error('Unexpected error fetching HumanDetect configs:', error)
       }
-
     } catch (error) {
       console.error('Error fetching all entities:', error)
     }

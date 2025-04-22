@@ -1,4 +1,4 @@
-import { ApcConfig } from "@renderer/shared/types/apc"
+import { ApcConfig } from '@renderer/shared/types/apc'
 
 export interface ResponseEventConfigDto {
   id: number

@@ -1,10 +1,7 @@
 import { AxiosInstance } from 'axios'
-import {
-  LOGIN,
-  UPDATE_USER,
-} from '../../../constants/paths'
+import { LOGIN, UPDATE_USER } from '../../../constants/paths'
 import { RequestLoginDto, RequestUpdateUserDto } from '../dto/request-auth-dto'
-import { ResponseLoginDto,  } from '../dto/response-auth-dto'
+import { ResponseLoginDto } from '../dto/response-auth-dto'
 
 export const authService = (authClient: AxiosInstance, publicClient: AxiosInstance) => {
   const login = async (dto: RequestLoginDto): Promise<ResponseLoginDto> => {
@@ -26,9 +23,8 @@ export const authService = (authClient: AxiosInstance, publicClient: AxiosInstan
     }
   }
 
-
   return {
     login,
-    updateUser,
+    updateUser
   }
 }

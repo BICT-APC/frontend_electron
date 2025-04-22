@@ -1,5 +1,5 @@
 import { getHumanDetectConfigByCctvId, putHumanDetectRoiByCctvId } from './human-detect-api'
-import { 
+import {
   readApcConfigByCctvId,
   readEventConfigByCctvId,
   updateRuleLineCctvId,

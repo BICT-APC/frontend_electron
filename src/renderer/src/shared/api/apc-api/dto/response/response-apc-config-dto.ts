@@ -6,5 +6,3 @@ export interface ResponseApcConfigDto {
   cctvId: number
   ruleLine: RuleLine[]
 }
-
-

@@ -14,20 +14,20 @@ export default defineConfig({
       proxy: {
         '/cctv-api': {
           target: 'http://192.168.0.185:31000',
-          changeOrigin: true,
+          changeOrigin: true
         },
         '/apc-api': {
           target: 'http://192.168.0.185:31000',
-          changeOrigin: true,
+          changeOrigin: true
         },
         '/human-detect-api': {
           target: 'http://192.168.0.185:31000',
-          changeOrigin: true,
+          changeOrigin: true
         },
         '/auth-api': {
           target: 'http://192.168.0.185:31000',
-          changeOrigin: true,
-        },
+          changeOrigin: true
+        }
       }
     },
     resolve: {

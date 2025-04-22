@@ -1,11 +1,15 @@
 import { AxiosInstance } from 'axios'
-import { READ_APC_CONFIG_BY_CCTV_ID, READ_EVENT_CONFIG_BY_AREA_ID, UPDATE_APC_CONFIG_BY_CCTV_ID, UPDATE_EVENT_CONFIG_BY_AREA_ID } from '../../../constants/paths'
+import {
+  READ_APC_CONFIG_BY_CCTV_ID,
+  READ_EVENT_CONFIG_BY_AREA_ID,
+  UPDATE_APC_CONFIG_BY_CCTV_ID,
+  UPDATE_EVENT_CONFIG_BY_AREA_ID
+} from '../../../constants/paths'
 import { ResponseApcConfigDto } from '../dto/response/response-apc-config-dto'
 import { RequestApcConfigDto } from '../dto/request/request-apc-config-dto'
 import { RequestEventConfigDto } from '../dto/request/request-event-config-dto'
 
 export const apcService = (apcClient: AxiosInstance) => {
-
   const readApcConfigByCctvId = async (cctvId: number): Promise<ResponseApcConfigDto> => {
     // eslint-disable-next-line no-useless-catch
     try {
@@ -33,8 +37,6 @@ export const apcService = (apcClient: AxiosInstance) => {
       throw error
     }
   }
-
-  
 
   const updateRuleLineCctvId = async (
     cctvId: number,
