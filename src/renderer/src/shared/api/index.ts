@@ -1,13 +1,20 @@
 import { getHumanDetectConfigByCctvId, putHumanDetectRoiByCctvId } from './human-detect-api'
-import { getApcConfigByCctvId, putRuleLineCctvId } from './apc-api'
+import { 
+  readApcConfigByCctvId,
+  readEventConfigByCctvId,
+  updateRuleLineCctvId,
+  updateEventConfigCctvId
+} from './apc-api'
 import { getAllCctv } from './cctv-api'
 import { getRefresh } from './pomit-api'
 
 export {
   getHumanDetectConfigByCctvId,
   putHumanDetectRoiByCctvId,
-  getApcConfigByCctvId,
-  putRuleLineCctvId,
+  readApcConfigByCctvId,
+  readEventConfigByCctvId,
+  updateRuleLineCctvId,
+  updateEventConfigCctvId,
   getAllCctv,
   getRefresh
 }
