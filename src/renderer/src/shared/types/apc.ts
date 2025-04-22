@@ -1,6 +1,6 @@
 export interface ApcConfig {
   cctvId: number
-  ruleLine: RuleLinePoints[]
+  ruleLineList: RuleLine[]
   // eventConfig: EventConfig
 }
 
@@ -8,6 +8,10 @@ export interface RuleLinePoints {
   x: number
   y: number
   orderIndex: number
+}
+
+export interface RuleLine {
+  ruleLine: RuleLinePoints[]
 }
 
 export interface EventConfig {
