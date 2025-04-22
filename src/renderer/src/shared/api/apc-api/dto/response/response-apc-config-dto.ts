@@ -5,11 +5,6 @@ export interface ResponseApcConfigDto {
   areaId: number
   cctvId: number
   ruleLine: RuleLine[]
-  // eventConfig: EventConfigDto
 }
 
-export interface EventConfigDto {
-  id: number
-  areaId: number
-  resetTime: string
-}
+

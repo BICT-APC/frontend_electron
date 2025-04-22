@@ -2,7 +2,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
 import { MainPage } from '../pages/MainPage/'
 import { LoginPage } from '../pages/loginPage'
-import { AuthRoute } from '../shared/auth/auth-router'
+import { AuthRoute } from './router/auth-router'
 
 function App() {
   return (

@@ -1,13 +1,15 @@
 import { AxiosInstance } from 'axios'
-import { GET_APC_CONFIG_BY_CCTV_ID, PUT_APC_RULE_LINE_BY_CCTV_ID } from '../../../constants/paths'
-import { RequestPutRuleLineDto } from '../dto/request-put-rule-line-dto'
-import { ResponseApcConfigDto } from '../dto/response-apc-config-dto'
+import { READ_APC_CONFIG_BY_CCTV_ID, READ_EVENT_CONFIG_BY_AREA_ID, UPDATE_APC_CONFIG_BY_CCTV_ID, UPDATE_EVENT_CONFIG_BY_AREA_ID } from '../../../constants/paths'
+import { ResponseApcConfigDto } from '../dto/response/response-apc-config-dto'
+import { RequestApcConfigDto } from '../dto/request/request-apc-config-dto'
+import { RequestEventConfigDto } from '../dto/request/request-event-config-dto'
 
 export const apcService = (apcClient: AxiosInstance) => {
-  const getApcConfigByCctvId = async (cctvId: number): Promise<ResponseApcConfigDto> => {
+
+  const readApcConfigByCctvId = async (cctvId: number): Promise<ResponseApcConfigDto> => {
     // eslint-disable-next-line no-useless-catch
     try {
-      const response = await apcClient.get<ResponseApcConfigDto>(GET_APC_CONFIG_BY_CCTV_ID, {
+      const response = await apcClient.get<ResponseApcConfigDto>(READ_APC_CONFIG_BY_CCTV_ID, {
         params: {
           cctvId
         }
@@ -18,15 +20,50 @@ export const apcService = (apcClient: AxiosInstance) => {
     }
   }
 
-  const putRuleLineCctvId = async (
+  const readEventConfigByCctvId = async (areaId: number): Promise<ResponseApcConfigDto> => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const response = await apcClient.get<ResponseApcConfigDto>(READ_EVENT_CONFIG_BY_AREA_ID, {
+        params: {
+          areaId
+        }
+      })
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  
+
+  const updateRuleLineCctvId = async (
     cctvId: number,
-    configData: RequestPutRuleLineDto
+    dto: RequestApcConfigDto
   ): Promise<ResponseApcConfigDto> => {
     // eslint-disable-next-line no-useless-catch
     try {
-      const response = await apcClient.put<ResponseApcConfigDto>(
-        PUT_APC_RULE_LINE_BY_CCTV_ID,
-        configData,
+      const response = await apcClient.post<ResponseApcConfigDto>(
+        UPDATE_APC_CONFIG_BY_CCTV_ID,
+        dto,
+        {
+          params: { cctvId }
+        }
+      )
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  const updateEventConfigCctvId = async (
+    cctvId: number,
+    dto: RequestEventConfigDto
+  ): Promise<ResponseApcConfigDto> => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const response = await apcClient.post<ResponseApcConfigDto>(
+        UPDATE_EVENT_CONFIG_BY_AREA_ID,
+        dto,
         {
           params: { cctvId }
         }
@@ -38,7 +75,9 @@ export const apcService = (apcClient: AxiosInstance) => {
   }
 
   return {
-    putRuleLineCctvId,
-    getApcConfigByCctvId
+    readApcConfigByCctvId,
+    readEventConfigByCctvId,
+    updateRuleLineCctvId,
+    updateEventConfigCctvId
   }
 }

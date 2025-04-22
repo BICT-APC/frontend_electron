@@ -3,7 +3,7 @@ import Konva from 'konva'
 import { cctvSelectStore } from '../../cctv-selecet-layer/'
 import { cctvConfigStore } from '../../cctv-config-button/'
 import { ApcConfig, RuleLinePoints } from '../../../shared/types/apc'
-import { putRuleLineCctvId } from '../../../shared/api'
+import { updateRuleLineCctvId } from '../../../shared/api'
 import { apcConfigStore } from '../../../entities/apc/apc-config-store'
 
 interface UseRuleLine {
@@ -35,7 +35,7 @@ export const useRuleLine = ({ ruleLine, cctvId, size, refs, states }: UseRuleLin
     states
   const { isRuleLineSetting, ruleLineSaveFlag, setRuleLineSaveFlag } = cctvConfigStore()
   const { selectedCctvId } = cctvSelectStore()
-  const { apcConfigList, setApcConfigList } = apcConfigStore()
+  // const { apcConfigList, setApcConfigList } = apcConfigStore()
 
   useEffect(() => {
     if (!ruleLine) {
@@ -113,21 +113,18 @@ export const useRuleLine = ({ ruleLine, cctvId, size, refs, states }: UseRuleLin
 
     const saveRegionApi = async (newLine: RuleLinePoints[]) => {
       console.log(newLine, cctvId)
-      const result = await putRuleLineCctvId(cctvId, { ruleLine: newLine })
-      const newApcConfigList: ApcConfig[] = apcConfigList.map((apcConfig) => {
-        if (apcConfig.cctvId === result.cctvId) {
-          return {
-            ...result
-            // eventConfig: {
-            //   ...result.eventConfig,
-            //   resetTime: parseTimeToObject(result.eventConfig.resetTime),
-            // },
-          }
-        } else {
-          return apcConfig
-        }
-      })
-      setApcConfigList(newApcConfigList)
+      // const result = await updateRuleLineCctvId(cctvId, { ruleLineList: newLine })
+      // const newApcConfigList: ApcConfig[] = apcConfigList.map((apcConfig) => {
+      //   if (apcConfig.cctvId === result.cctvId) {
+      //     return {
+      //       ...result
+
+      //     }
+      //   } else {
+      //     return apcConfig
+      //   }
+      // })
+      // setApcConfigList(newApcConfigList)
     }
 
     saveRegionApi(newLine)

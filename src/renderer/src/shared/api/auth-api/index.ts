@@ -14,4 +14,7 @@ export const publicClient = axios.create({
   headers: { 'Content-Type': 'application/json' }
 })
 
-export const { login, signup, deleteUser, updateUser, getUser, getUsers } = authService(authClient, publicClient)
+export const {
+  login,
+  updateUser,
+} = authService(authClient, publicClient)

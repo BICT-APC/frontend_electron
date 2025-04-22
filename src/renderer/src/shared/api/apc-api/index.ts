@@ -9,4 +9,9 @@ const apcClient = axios.create({
   }
 })
 
-export const { putRuleLineCctvId, getApcConfigByCctvId } = apcService(apcClient)
+export const { 
+  readApcConfigByCctvId,
+  readEventConfigByCctvId,
+  updateRuleLineCctvId,
+  updateEventConfigCctvId
+} = apcService(apcClient)

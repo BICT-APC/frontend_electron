@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
-import { Client, RemoteStream } from 'ion-sdk-js'
 import { IonSFUJSONRPCSignal } from 'ion-sdk-js/lib/signal/json-rpc-impl'
+import { SFU_SERVER, TURN_SERVER } from '@renderer/shared/constants/paths'
+import Client from 'ion-sdk-js/lib/client'
+import { RemoteStream } from 'ion-sdk-js/lib/stream'
 
 class KeepAliveSignal extends IonSFUJSONRPCSignal {
   get ws(): WebSocket {
@@ -19,7 +21,7 @@ export const useWebRTC = (cctvId: number) => {
   useEffect(() => {
     const videoEl = videoRef.current
     const run = async () => {
-      const signal = new KeepAliveSignal('ws://192.168.0.185:31000/sfu-server')
+      const signal = new KeepAliveSignal(`ws://${SFU_SERVER}`)
       signalRef.current = signal
 
       pingTimerRef.current = setInterval(() => {
@@ -32,7 +34,7 @@ export const useWebRTC = (cctvId: number) => {
         codec: 'vp8',
         iceServers: [
           {
-            urls: 'turn:192.168.0.185:31000?transport=tcp',
+            urls: `turn:${TURN_SERVER}?transport=tcp`,
             username: 'webrtc',
             credential: 'webrtc'
           }
@@ -53,7 +55,7 @@ export const useWebRTC = (cctvId: number) => {
       signal.onerror = (e) => console.error('❌ WebSocket 오류:', e)
       signal.onclose = (e) => console.warn('🚫 WebSocket 종료:', e)
 
-      client.ontrack = (track, stream) => {
+      client.ontrack = (_track, stream) => {
         streamRef.current = stream
 
         // unmute
@@ -81,8 +83,12 @@ export const useWebRTC = (cctvId: number) => {
     return () => {
       clientRef.current?.close()
       signalRef.current?.close()
-      if (pingTimerRef.current) clearInterval(pingTimerRef.current)
-      if (videoEl) videoEl.srcObject = null
+      if (pingTimerRef.current) {
+        clearInterval(pingTimerRef.current)
+      }
+      if (videoEl) {
+        videoEl.srcObject = null
+      }
       streamRef.current = null
     }
   }, [cctvId])

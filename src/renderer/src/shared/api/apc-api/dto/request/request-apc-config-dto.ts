@@ -1,5 +1,5 @@
 import { RuleLine } from '@renderer/shared/types/apc'
 
-export interface RequestPutRuleLineDto {
+export interface RequestApcConfigDto {
   ruleLineList: RuleLine[]
 }
