@@ -13,7 +13,10 @@ export const useLoginForm = () => {
     try {
       const loginDto: RequestLoginDto = { username, password }
       const token: ResponseLoginDto = await login(loginDto)
-      localStorage.setItem('accessToken', token.token)
+
+      // localStorage 대신 Electron 세션에 토큰 저장
+      window.electronToken.setToken(token.token)
+
       window.location.href = '/'
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {

@@ -2,9 +2,17 @@
 import { useLoginForm } from '../lib/useLoginForm'
 import styles from './LoginForm.module.css'
 import { TextButton } from '../../text-button'
+import { KeyboardEvent } from 'react'
 
 export const LoginForm = () => {
   const { username, setUsername, password, setPassword, error, handleSubmit } = useLoginForm()
+
+  // Enter 키 처리 함수
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSubmit()
+    }
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -16,6 +24,7 @@ export const LoginForm = () => {
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          onKeyPress={handleKeyPress}
         />
         <input
           className={styles.input}
@@ -23,6 +32,7 @@ export const LoginForm = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyPress={handleKeyPress}
         />
         <div className={styles.buttonWrapper}>
           <TextButton onClick={handleSubmit}>로그인</TextButton>

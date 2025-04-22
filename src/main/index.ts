@@ -10,6 +10,9 @@ app.commandLine.appendSwitch('enable-zero-copy') // GPU 메모리 직접 접근
 app.commandLine.appendSwitch('enable-accelerated-video-decode')
 app.commandLine.appendSwitch('enable-accelerated-mjpeg-decode')
 
+// 메모리에 토큰 저장 (애플리케이션 종료 시 자동으로 삭제됨)
+let accessToken: string | null = null
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -67,6 +70,19 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+
+  // 토큰 관리를 위한 IPC 핸들러 등록
+  ipcMain.handle('get-token', async () => {
+    return accessToken
+  })
+
+  ipcMain.on('set-token', async (_, token) => {
+    accessToken = token
+  })
+
+  ipcMain.on('clear-token', async () => {
+    accessToken = null
+  })
 
   createWindow()
 
