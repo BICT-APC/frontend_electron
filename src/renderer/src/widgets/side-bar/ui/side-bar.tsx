@@ -11,7 +11,7 @@ export const SideBar = () => {
 
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.header}>MAYDAY CONTENT</div>
+      <div className={styles.header}>APC 카운트</div>
       <div className={styles.content}>
         {areaList.map((area) => {
           const areaCctvs = area.cctvIdList
@@ -23,18 +23,23 @@ export const SideBar = () => {
               <div className={styles.areaName}>
                 <div>{area.name}</div>
                 <div className={styles.apcCount}>
-                  <span>{apcForArea?.in || 0}</span>
+                  <div className={styles.redText}>In</div>
+                  <div className={styles.blueText}>Out</div>
+                  <div className={styles.blackText}>Total</div>
+                </div>
+                <div className={styles.apcCount}>
+                  <div className={styles.blackText}>{apcForArea?.in || 0}</div>
                   <span>/</span>
-                  <span>{apcForArea?.out || 0} </span>
+                  <div className={styles.blackText}>{apcForArea?.out || 0} </div>
                   <span>/</span>
-                  <span>{apcForArea?.total || 0}</span>
+                  <div className={styles.blackText}>{apcForArea?.total || 0}</div>
                 </div>
                 {/* <div className={styles.configButton}>리셋 시간 설정</div> */}
                 {/* <div>human-config</div> */}
               </div>
               {areaCctvs.length === 0 && <div className={styles.noCctv}>CCTV 없음</div>}
-              {areaCctvs.map((cctv) => (
-                <CctvMonitorBox cctvName={cctv!.name} />
+              {areaCctvs.map((cctv, idx) => (
+                <CctvMonitorBox cctvName={cctv!.name} key={`monitor-box-${idx}`}/>
               ))}
             </div>
           )

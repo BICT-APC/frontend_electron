@@ -5,7 +5,8 @@ import { AUTH_API_URL } from '../../constants/paths'
 // 토큰을 가져오는 함수
 const getAuthHeader = async () => {
   try {
-    const token = await window.electronToken.getToken()
+    // const token = await window.electronToken.getToken()
+    const token = sessionStorage.getItem("token")
     return token ? `Bearer ${token}` : ''
   } catch (error) {
     console.error('토큰 가져오기 실패:', error)

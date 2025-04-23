@@ -1,4 +1,4 @@
-const BASE_URL= 'http://10.133.110.50:31000'
+const BASE_URL= ''
 
 export const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL || `${BASE_URL}/auth-api`
 
@@ -34,6 +34,6 @@ const POD_API = '/api/app-manage/pods'
 export const POD_LOGS = (podName: string) => `${POD_API}/${podName}/logs`
 export const POD_DETAIL = (podName: string) => `${POD_API}/${podName}`
 
-export const TURN_SERVER = import.meta.env.VITE_TURN_SERVER || '10.133.110.50:31000'
+export const TURN_SERVER = import.meta.env.VITE_TURN_SERVER || '14.42.211.57:31000'
 
-export const SFU_SERVER = import.meta.env.VITE_SFU_SERVER || '10.133.110.50:31000/sfu-server'
+export const SFU_SERVER = import.meta.env.VITE_SFU_SERVER || '14.42.211.57:31000/sfu-server'

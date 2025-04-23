@@ -25,11 +25,11 @@ export const TopNavigation = () => {
       <div className={styles.rightAlignWrapper}>
         {selectedCctvId && <CctvConfigButton />}
 
-        <IconButton onClick={() => {}} iconSrc={cameraSettingIcon} altText="cameraSettingIcon" />
+        {/* <IconButton onClick={() => {}} iconSrc={cameraSettingIcon} altText="cameraSettingIcon" />
 
         <IconButton onClick={() => {}} iconSrc={graphIcon} altText="graphIcon" />
 
-        <IconButton onClick={() => {}} iconSrc={serverIcon} altText="serverIcon" />
+        <IconButton onClick={() => {}} iconSrc={serverIcon} altText="serverIcon" /> */}
       </div>
     </div>
   )
