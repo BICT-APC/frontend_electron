@@ -1,8 +1,13 @@
 import { CctvConfigButton } from '../../../features/cctv-config-button'
 import { cctvSelectStore } from '../../../features/cctv-selecet-layer'
-import { IconButton } from '../../../features/icon-button'
+// import { IconButton } from '../../../features/icon-button'
 import { TextButton } from '../../../features/text-button'
-import { cameraSettingIcon, graphIcon, headerLogo, serverIcon } from '../../../shared/assets/image'
+import { 
+  // cameraSettingIcon, 
+  // graphIcon, 
+  headerLogo, 
+  // serverIcon 
+} from '../../../shared/assets/image'
 import { topNavigationHandler } from '../lib/top-navigation-handler'
 import styles from './top-navigation.module.css'
 
@@ -25,11 +30,11 @@ export const TopNavigation = () => {
       <div className={styles.rightAlignWrapper}>
         {selectedCctvId && <CctvConfigButton />}
 
-        <IconButton onClick={() => {}} iconSrc={cameraSettingIcon} altText="cameraSettingIcon" />
+        {/* <IconButton onClick={() => {}} iconSrc={cameraSettingIcon} altText="cameraSettingIcon" />
 
         <IconButton onClick={() => {}} iconSrc={graphIcon} altText="graphIcon" />
 
-        <IconButton onClick={() => {}} iconSrc={serverIcon} altText="serverIcon" />
+        <IconButton onClick={() => {}} iconSrc={serverIcon} altText="serverIcon" /> */}
       </div>
     </div>
   )

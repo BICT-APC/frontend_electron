@@ -17,7 +17,8 @@ export const useLoginForm = () => {
       const token: ResponseLoginDto = await login(loginDto)
 
       // localStorage 대신 Electron 세션에 토큰 저장
-      window.electronToken.setToken(token.token)
+      // window.electronToken.setToken(token.token)
+      sessionStorage.setItem("token", token.token)
 
       navigate('/')
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
