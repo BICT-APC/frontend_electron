@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import ico from '../../resources/icon.ico?asset'
 
 app.commandLine.appendSwitch('enable-features', 'VaapiVideoDecoder')
 app.commandLine.appendSwitch('ignore-gpu-blacklist') // 모든 GPU 허용
@@ -11,7 +12,7 @@ app.commandLine.appendSwitch('enable-accelerated-video-decode')
 app.commandLine.appendSwitch('enable-accelerated-mjpeg-decode')
 
 // 메모리에 토큰 저장 (애플리케이션 종료 시 자동으로 삭제됨)
-let accessToken: string | null = null
+// let accessToken: string | null = null
 
 function createWindow(): void {
   // Create the browser window.
@@ -21,7 +22,7 @@ function createWindow(): void {
     fullscreen: true,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    ...(process.platform === 'linux' ? { icon } : { icon: ico }),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
@@ -35,7 +36,15 @@ function createWindow(): void {
       devTools: true
     }
   })
-
+  mainWindow.setMenuBarVisibility(false)
+  mainWindow.setAutoHideMenuBar(true) 
+  mainWindow.removeMenu() 
+  mainWindow.webContents.on('before-input-event', (_, input) => {
+    if (input.key === 'F12' && input.type === 'keyDown') {
+      mainWindow.webContents.openDevTools({ mode: 'detach' }) // 독립 창으로
+    }
+  })
+  
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
@@ -72,17 +81,17 @@ app.whenReady().then(() => {
   ipcMain.on('ping', () => console.log('pong'))
 
   // 토큰 관리를 위한 IPC 핸들러 등록
-  ipcMain.handle('get-token', async () => {
-    return accessToken
-  })
+  // ipcMain.handle('get-token', async () => {
+  //   return accessToken
+  // })
 
-  ipcMain.on('set-token', async (_, token) => {
-    accessToken = token
-  })
+  // ipcMain.on('set-token', async (_, token) => {
+  //   accessToken = token
+  // })
 
-  ipcMain.on('clear-token', async () => {
-    accessToken = null
-  })
+  // ipcMain.on('clear-token', async () => {
+  //   accessToken = null
+  // })
 
   createWindow()
 
