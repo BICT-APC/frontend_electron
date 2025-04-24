@@ -1,34 +1,24 @@
-# frontend_electron
+# Docker
 
-An Electron application with React and TypeScript
-
-## Recommended IDE Setup
-
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
-## Project Setup
-
-### Install
-
+## 개발용
 ```bash
-$ npm install
+docker build -f dockerfile.dev -t bict/frontend-dev .
+docker tag bict/frontend-dev 192.168.0.18:5000/bict/frontend-dev
+docker push 192.168.0.18:5000/bict/frontend-dev
+docker run -d --gpus all -v %cd%:/app --name frontend-dev bict/frontend-dev tail -f /dev/null
 ```
 
-### Development
-
+## 프로덕션용
 ```bash
-$ npm run dev
+docker build -f dockerfile.prod -t bict/frontend .
+docker tag bict/frontend 192.168.0.185:32000/bict/frontend
+docker push 192.168.0.185:32000/bict/frontend
+docker run --rm --gpus all bict/frontend
 ```
 
-### Build
-
-```bash
-# For windows
-$ npm run build:win
-
-# For macOS
-$ npm run build:mac
-
-# For Linux
-$ npm run build:linux
-```
+# 환경변수
+- VITE_CCTV_API_URL
+- VITE_APC_API_URL
+- VITE_HUMAN_DETECT_API_URL
+- VITE_HUMAN_DETECT_MODULE_URL
+- VITE_POMIT_API_URL
