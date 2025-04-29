@@ -10,7 +10,10 @@ COPY tsconfig.web.json ./
 COPY src/ ./src/
 
 # 2. 의존성 설치
-RUN npm ci
+RUN npm ci     
+ 
+ENV VITE_TURN_SERVER=10.133.110.50:31000 
+ENV VITE_SFU_SERVER=10.133.110.50:31000/sfu-server
 
 # 3. 웹 빌드
 RUN npm run build:web
