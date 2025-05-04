@@ -1,6 +1,7 @@
 import { readHumanDetectConfig, updateHumanDetectConfig } from './human-detect-api'
 import {
   readApc,
+  readApcLog,
   readApcConfig,
   readEventConfig,
   updateRuleLine,
@@ -13,6 +14,7 @@ export {
   readHumanDetectConfig,
   updateHumanDetectConfig,
   readApc,
+  readApcLog,
   readApcConfig,
   readEventConfig,
   updateRuleLine,

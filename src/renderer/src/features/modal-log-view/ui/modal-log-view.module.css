@@ -1,0 +1,112 @@
+.logContainer {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: 100%;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+}
+
+.logHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #e9ecef;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.logHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #495057;
+}
+
+.cctvId {
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.logContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0px15px;
+  color: #575757;
+}
+
+.configInfo {
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.configInfo p {
+  margin-top: 0;
+  font-weight: bold;
+  color: #495057;
+}
+
+.configInfo ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+
+.configInfo li {
+  padding: 5px 0;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.configInfo li:last-child {
+  border-bottom: none;
+}
+
+.logList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.logItem {
+  padding: 8px 10px;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 0.9rem;
+  display: flex;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.logItem:hover {
+  background-color: #cecece;
+}
+
+.selectedLogItem {
+  background-color: #e6f7ff;
+  border-left: 3px solid #1890ff;
+}
+
+.logItem:last-child {
+  border-bottom: none;
+  margin-bottom: 10px;
+}
+
+.noData {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0px;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.frameContainer {
+  max-width: 600px;
+  height: auto;
+}
+
+.frameImage {
+  width: 100%;
+  height: auto;
+}

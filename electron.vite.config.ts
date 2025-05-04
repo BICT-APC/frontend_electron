@@ -13,21 +13,30 @@ export default defineConfig({
     server: {
       proxy: {
         '/auth-api': {
-          target: 'http://14.42.211.57:31000',
+          // target: 'http://14.42.211.57:31000', 평택
+          target: 'http://192.168.0.185:31000',
           changeOrigin: true
         },
         '/cctv-api': {
-          target: 'http://14.42.211.57:31000',
+          // target: 'http://14.42.211.57:31000', 평택
+          target: 'http://192.168.0.185:31000',
           changeOrigin: true
         },
         '/human-detect-api': {
-          target: 'http://14.42.211.57:31000',
+          // target: 'http://14.42.211.57:31000', 평택
+          target: 'http://192.168.0.185:31000',
           changeOrigin: true
         },
         '/apc-api': {
-          target: 'http://14.42.211.57:31000',
+          // target: 'http://14.42.211.57:31000', 평택
+          target: 'http://192.168.0.185:31000',
           changeOrigin: true
         },
+        '/human-detect-module': {
+          // target: 'http://14.42.211.57:31000', 평택
+          target: 'http://192.168.0.185:31000',
+          changeOrigin: true
+        }
       }
     },
     resolve: {
