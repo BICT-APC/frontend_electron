@@ -1,5 +1,5 @@
-// const BASE_URL = 'http://10.133.110.50:31000'
-const BASE_URL = 'http://192.168.0.185:31000'
+export const BASE_URL = import.meta.env.VITE_BASE_URL || ''
+// const BASE_URL = import.meta.env.VITE_BASE_URL || '14.42.211.57:31000'
 
 export const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL || `${BASE_URL}/auth-api`
 
@@ -15,7 +15,9 @@ export const APC_API_URL = import.meta.env.VITE_APC_API_URL || `${BASE_URL}/apc-
 
 export const READ_APC = '/api/apc/read/'
 export const READ_APC_CONFIG = '/api/apc_config/read/'
+export const READ_APC_LOG = '/api/apc/apc_log/read/'
 export const UPDATE_APC_CONFIG = '/api/apc_config/update/'
+export const UPDATE_APC_LOG = '/api/apc/apc_log/update/'
 
 export const READ_EVENT_CONFIG = '/api/event_config/read/'
 export const UPDATE_EVENT_CONFIG = '/api/event_config/update/'
@@ -36,8 +38,6 @@ const POD_API = '/api/app-manage/pods'
 export const POD_LOGS = (podName: string) => `${POD_API}/${podName}/logs`
 export const POD_DETAIL = (podName: string) => `${POD_API}/${podName}`
 
-// export const TURN_SERVER = import.meta.env.VITE_TURN_SERVER || '10.133.110.50:31000'
-export const TURN_SERVER = '192.168.0.185:31000'
+export const TURN_SERVER = import.meta.env.VITE_TURN_SERVER || `${BASE_URL}`
 
-// export const SFU_SERVER = import.meta.env.VITE_SFU_SERVER || '10.133.110.50:31000/sfu-server'
-export const SFU_SERVER = '192.168.0.185:31000/sfu-server'
+export const SFU_SERVER = import.meta.env.VITE_SFU_SERVER || `${BASE_URL}/sfu-server`

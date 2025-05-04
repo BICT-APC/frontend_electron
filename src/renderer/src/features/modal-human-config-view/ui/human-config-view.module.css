@@ -1,0 +1,34 @@
+.configContainer {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.configHeader {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.configItem {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+}
+
+.configGroup {
+  display: flex;
+}
+
+.configLabel {
+  font-weight: bold;
+  min-width: 100px;
+  color: #555;
+}
+
+.configValue {
+  color: #333;
+  flex: 1;
+}

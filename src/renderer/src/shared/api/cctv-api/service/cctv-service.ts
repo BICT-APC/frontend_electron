@@ -4,7 +4,6 @@ import { ResponseCctvListDto } from '../dto/response-cctv-list-dto'
 import { ResponseAreaListDto } from '../dto/reasponse-area-list-dto'
 
 export const cctvService = (cctvClient: AxiosInstance) => {
-
   const readAllCctv = async (): Promise<ResponseCctvListDto> => {
     try {
       const response = await cctvClient.get<ResponseCctvListDto>(READ_ALL_CCTV)
@@ -15,7 +14,6 @@ export const cctvService = (cctvClient: AxiosInstance) => {
   }
 
   const readAllArea = async (): Promise<ResponseAreaListDto> => {
-
     try {
       const response = await cctvClient.get<ResponseAreaListDto>(READ_ALL_AREA)
       return response.data
@@ -23,7 +21,6 @@ export const cctvService = (cctvClient: AxiosInstance) => {
       throw error
     }
   }
-  
 
   return {
     readAllArea,
