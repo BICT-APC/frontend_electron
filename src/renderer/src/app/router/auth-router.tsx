@@ -15,6 +15,7 @@ export function AuthRoute({ children }: { children: JSX.Element }) {
         // const token = await window.electronToken.getToken()
         const token = sessionStorage.getItem("token");
         setIsLoggedIn(!!token)
+        
       } catch (error) {
         console.error('토큰 확인 중 오류 발생:', error)
         setIsLoggedIn(false)
