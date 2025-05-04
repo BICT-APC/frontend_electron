@@ -1,13 +1,16 @@
 import React from 'react'
 import styles from './Modal.module.css'
+import { ModalType } from '../../shared/modal'
 
 interface ModalProps {
   isOpen: boolean
   onClose: () => void
-  children?: React.ReactNode
+  header?: ModalType
+  logBox?: React.ReactNode
+  contentBox?: React.ReactNode
 }
 
-export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, logBox, contentBox, header }: ModalProps) => {
   if (!isOpen) return null
 
   return (
@@ -18,10 +21,9 @@ export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
         role="dialog"
         aria-modal="true"
       >
-        <button className={styles.closeButton} onClick={onClose} aria-label="Close modal">
-          ✕
-        </button>
-        {children}
+        {header && <div className={styles.header}>{header}</div>}
+        {logBox && <div className={styles.logBox}>{logBox}</div>}
+        {contentBox && <div className={styles.content}>{contentBox}</div>}
       </div>
     </div>
   )

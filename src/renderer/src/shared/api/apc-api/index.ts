@@ -9,5 +9,11 @@ const apcClient = axios.create({
   }
 })
 
-export const { readApc, readApcConfig, readEventConfig, updateRuleLine, updateEventConfig } =
-  apcService(apcClient)
+export const {
+  readApc,
+  readApcLog,
+  readApcConfig,
+  readEventConfig,
+  updateRuleLine,
+  updateEventConfig
+} = apcService(apcClient)

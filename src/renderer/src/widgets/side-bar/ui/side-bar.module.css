@@ -47,13 +47,17 @@ li {
   gap: 5px;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
-
 .areaName {
   justify-content: center;
   font-weight: bold;
   font-size: 1.05rem;
   color: #333;
+  border-radius: 4px;
+}
+.areaName:hover {
+  background: #f0f0f0;
 }
 .configButton {
   font-size: 0.95rem;
