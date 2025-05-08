@@ -2,6 +2,7 @@ import { HumanConfigView } from '../../features/modal-human-config-view'
 import { Modal } from '../../features/modal'
 import { useModalState, ModalType } from '../../shared/modal'
 import { ApcConfigView } from '../../features/modal-apc-config-view'
+import { AppManageView } from '../../features/modal-app-manage-view'
 
 export const ConfigModal = () => {
   const { modalState, cctvId, closeModal, areaId } = useModalState()
@@ -15,6 +16,8 @@ export const ConfigModal = () => {
           <HumanConfigView cctvId={cctvId!} />
         ) : modalState === ModalType.ApcConfig ? (
           <ApcConfigView areaId={areaId!} />
+        ) : modalState === ModalType.AppManage ? (
+          <AppManageView />
         ) : null
       }
     />

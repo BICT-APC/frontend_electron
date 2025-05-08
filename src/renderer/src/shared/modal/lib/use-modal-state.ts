@@ -7,6 +7,7 @@ type ModalState = {
   areaId: number | null
   openHumanConfig: (cctvId: number) => void
   openApcConfig: (areaId?: number, cctvId?: number) => void
+  openAppManange: () => void
   closeModal: () => void
 }
 
@@ -25,6 +26,10 @@ const useModalState = create<ModalState>((set) => ({
       cctvId: cctvId !== undefined ? cctvId : null,
       areaId: areaId !== undefined ? areaId : null
     })
+  },
+
+  openAppManange: () => {
+    set({ modalState: ModalType.AppManage })
   },
 
   closeModal: () => {
