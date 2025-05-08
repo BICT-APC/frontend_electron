@@ -1,6 +1,6 @@
 import styles from './modal-log-view.module.css'
 import { useApcLog } from '../lib/apc-log-hook'
-import { Pagination } from '../../../features/pagination/ui/pagination'
+import { Pagination } from '../../../features/pagination'
 import { useState } from 'react'
 
 interface ModalLogViewProps {

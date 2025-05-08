@@ -1,7 +1,6 @@
 .sidebar {
   width: 240px;
   background: #686868;
-  /* border-right: 1px solid #e0e0e0; */
   display: flex;
   flex-direction: column;
   border-radius: 8px;
@@ -11,8 +10,6 @@
 .header {
   font-size: 1.2rem;
   font-weight: bold;
-  padding: 0.5rem;
-  /* border-bottom: 1px solid #e0e0e0; */
   background: #b9b9b9;
   color: black;
   border-radius: 8px 8px 0px 0px;
@@ -26,10 +23,9 @@
 }
 
 .areaGroup {
-  margin-bottom: 1.5rem;
   border: 1px solid #b9b9b9;
   border-radius: 8px;
-  padding: 0.75rem 0.25rem 0.25rem 0.25rem;
+  padding: 4px;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.3);
   margin-bottom: 0.5rem;
   background: #d8d8d8;
@@ -37,51 +33,4 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
-}
-
-.areaBox {
-  justify-content: center;
-  font-weight: bold;
-  font-size: 1.05rem;
-  color: #333;
-  border-radius: 8px;
-}
-
-.areaBox:hover {
-  background: #ffffff;
-}
-
-.apcCount {
-  display: flex;
-  flex-direction: row;
-  font-size: 0.95rem;
-  color: #333;
-  justify-content: center;
-}
-
-.noCctv {
-  color: #aaa;
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
-}
-
-.blueText {
-  display: flex;
-  justify-content: center;
-  flex: 1;
-  color: blue;
-}
-
-.redText {
-  display: flex;
-  justify-content: center;
-  flex: 1;
-  color: red;
-}
-
-.blackText {
-  display: flex;
-  justify-content: center;
-  flex: 1;
-  color: black;
 }

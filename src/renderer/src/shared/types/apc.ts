@@ -1,3 +1,11 @@
+export interface ApcData {
+  cctvId: number
+  areaId: number
+  in: number
+  out: number
+  total: number
+}
+
 export interface ApcConfig {
   cctvId: number
   ruleLineList: RuleLine[]

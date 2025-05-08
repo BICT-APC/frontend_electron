@@ -1,0 +1,55 @@
+.areaBox {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: #d8d8d8;
+  cursor: pointer;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: #333;
+  border-radius: 8px;
+}
+
+.areaBox:hover {
+  background-color: #ffffff;
+}
+
+.areaName {
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.apcLabels,
+.apcCount {
+  font-size: 0.95rem;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.redText,
+.blueText,
+.blackText {
+  width: 30%;
+  text-align: center;
+}
+
+.divider {
+  width: 5%;
+  text-align: center;
+  color: #333;
+}
+
+.redText {
+  color: #e53935;
+}
+
+.blueText {
+  color: #1e88e5;
+}
+
+.blackText {
+  color: #333;
+}
