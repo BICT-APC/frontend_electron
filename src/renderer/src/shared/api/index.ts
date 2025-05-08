@@ -10,7 +10,7 @@ import {
 } from './apc-api'
 import { readAllArea, readAllCctv } from './cctv-api'
 import { getRefresh } from './pomit-api'
-import { readPods, deletePod } from './app-manage-api'
+import { readPodLogs, readPods, deletePod } from './app-manage-api'
 
 export {
   readHumanDetectConfig,
@@ -26,5 +26,6 @@ export {
   updateSettingCount,
   getRefresh,
   readPods,
+  readPodLogs,
   deletePod
 }

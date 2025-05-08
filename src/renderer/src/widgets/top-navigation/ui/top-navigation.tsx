@@ -10,10 +10,12 @@ import {
 } from '../../../shared/assets/image'
 import { topNavigationHandler } from '../lib/top-navigation-handler'
 import styles from './top-navigation.module.css'
+import { useModalState } from '../../../shared/modal'
 
 export const TopNavigation = () => {
   const { selectedCctvId } = cctvSelectStore()
   const { pomitDbSyncHandler } = topNavigationHandler()
+  const { openAppManange } = useModalState()
 
   return (
     <div className={styles.wrapper}>
@@ -29,7 +31,7 @@ export const TopNavigation = () => {
 
       <div className={styles.rightAlignWrapper}>
         {selectedCctvId && <CctvConfigButton />}
-        <IconButton onClick={() => {}} iconSrc={serverIcon} altText="serverIcon" />
+        <IconButton onClick={openAppManange} iconSrc={serverIcon} altText="serverIcon" />
 
         {/* <IconButton onClick={() => {}} iconSrc={cameraSettingIcon} altText="cameraSettingIcon" />
 

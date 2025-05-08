@@ -1,0 +1,210 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  min-width: 50vw;
+  max-width: 50vw;
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.refreshButton {
+  padding: 8px 16px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.refreshButton:hover {
+  background-color: #357ab8;
+}
+
+.refreshButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error {
+  padding: 12px;
+  background-color: #ffebee;
+  color: #c62828;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.success {
+  padding: 12px;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.deploymentList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.deploymentItem {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.deploymentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.deploymentHeader:hover {
+  background-color: #eeeeee;
+}
+
+.deploymentHeader.expanded {
+  background-color: #e3f2fd;
+  border-bottom: 1px solid #bbdefb;
+}
+
+.deploymentInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.deploymentName {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+.statusBadge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.healthy {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.unhealthy {
+  background-color: #ffcdd2;
+  color: #c62828;
+}
+
+.deploymentActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reloadButton {
+  padding: 6px 12px;
+  background-color: #ff9800;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.reloadButton:hover {
+  background-color: #f57c00;
+}
+
+.reloadButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.expandIcon {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.deploymentContent {
+  padding: 16px;
+  background-color: white;
+}
+
+.podInfo {
+  margin-bottom: 20px;
+}
+
+.podInfo h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.podTable {
+  width: 100%;
+  border-collapse: collapse;
+  color: #333;
+}
+
+.podTable th,
+.podTable td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.podTable th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.logContainer {
+  margin-top: 16px;
+}
+
+.logContainer h3 {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.logs {
+  background-color: #263238;
+  color: #eeffff;
+  padding: 12px;
+  border-radius: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+  font-size: 0.9rem;
+  margin: 0;
+  text-align: left;
+}
+
+.noLogs,
+.noDeployments {
+  text-align: center;
+  padding: 24px;
+  color: #666;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
