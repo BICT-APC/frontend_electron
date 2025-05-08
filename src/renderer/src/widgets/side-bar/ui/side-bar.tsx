@@ -23,7 +23,7 @@ export const SideBar = () => {
           return (
             <div key={area.id} className={styles.areaGroup}>
               <div
-                className={styles.areaName}
+                className={styles.areaBox}
                 onClick={(e) => {
                   e.stopPropagation()
                   openApcConfig(area!.id)

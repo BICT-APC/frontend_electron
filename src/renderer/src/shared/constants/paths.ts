@@ -16,6 +16,7 @@ export const APC_API_URL = import.meta.env.VITE_APC_API_URL || `${BASE_URL}/apc-
 export const READ_APC = '/api/apc/read/'
 export const READ_APC_CONFIG = '/api/apc_config/read/'
 export const READ_APC_LOG = '/api/apc/apc_log/read/'
+export const UPDATE_APC_SETTING_COUNT = '/api/apc/update/'
 export const UPDATE_APC_CONFIG = '/api/apc_config/update/'
 export const UPDATE_APC_LOG = '/api/apc/apc_log/update/'
 

@@ -5,14 +5,17 @@ import {
   READ_APC_CONFIG,
   READ_EVENT_CONFIG,
   UPDATE_APC_CONFIG,
-  UPDATE_EVENT_CONFIG
+  UPDATE_EVENT_CONFIG,
+  UPDATE_APC_SETTING_COUNT
 } from '../../../constants/paths'
 import { ResponseApcDto } from '../dto/response/response-apc-dto'
 import { ResponseApcConfigDto } from '../dto/response/response-apc-config-dto'
+import { RequestSettingApcDto } from '../dto/request/request-apc-setting-dto'
 import { RequestApcConfigDto } from '../dto/request/request-apc-config-dto'
 import { RequestEventConfigDto } from '../dto/request/request-event-config-dto'
 import { ResponseApcLogDto } from '../dto/response/response-apc-log-dto'
 import { Page } from '../../../types/pages'
+import { ResponseEventConfigDto } from '../dto/response/response-event-config-dto'
 
 export const apcService = (apcClient: AxiosInstance) => {
   const readApc = async (areaId: number): Promise<ResponseApcDto> => {
@@ -63,14 +66,24 @@ export const apcService = (apcClient: AxiosInstance) => {
     }
   }
 
-  const readEventConfig = async (areaId: number): Promise<ResponseApcConfigDto> => {
+  const readEventConfig = async (areaId: number): Promise<ResponseEventConfigDto> => {
     // eslint-disable-next-line no-useless-catch
     try {
-      const response = await apcClient.get<ResponseApcConfigDto>(READ_EVENT_CONFIG, {
+      const response = await apcClient.get<ResponseEventConfigDto>(READ_EVENT_CONFIG, {
         params: {
           areaId
         }
       })
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  const updateSettingCount = async (dto: RequestSettingApcDto): Promise<RequestSettingApcDto> => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const response = await apcClient.post<RequestSettingApcDto>(UPDATE_APC_SETTING_COUNT, dto)
       return response.data
     } catch (error) {
       throw error
@@ -93,13 +106,13 @@ export const apcService = (apcClient: AxiosInstance) => {
   }
 
   const updateEventConfig = async (
-    cctvId: number,
+    areaId: number,
     dto: RequestEventConfigDto
-  ): Promise<ResponseApcConfigDto> => {
+  ): Promise<ResponseEventConfigDto> => {
     // eslint-disable-next-line no-useless-catch
     try {
-      const response = await apcClient.post<ResponseApcConfigDto>(UPDATE_EVENT_CONFIG, dto, {
-        params: { cctvId }
+      const response = await apcClient.post<ResponseEventConfigDto>(UPDATE_EVENT_CONFIG, dto, {
+        params: { areaId }
       })
       return response.data
     } catch (error) {
@@ -113,6 +126,7 @@ export const apcService = (apcClient: AxiosInstance) => {
     readApcConfig,
     readEventConfig,
     updateRuleLine,
-    updateEventConfig
+    updateEventConfig,
+    updateSettingCount
   }
 }
