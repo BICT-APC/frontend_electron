@@ -1,6 +1,6 @@
 .configContainer {
-  padding: 20px;
   margin: 0 auto;
+  padding: 10px;
 }
 
 .configHeader {
@@ -10,18 +10,112 @@
   border-bottom: 1px solid #ddd;
 }
 
-.configItem {
+.countItem {
   display: flex;
   align-items: baseline;
 }
 
-.configLabel {
+.countLabel {
   font-weight: bold;
   min-width: 120px;
   color: #34495e;
 }
 
-.configValue {
+.countValue {
   color: #333;
-  flex: 1;
+  flex: 0.8;
+  background-color: white;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* 리셋 시간 설정 섹션 스타일 */
+.resetTimeSection {
+  border-top: 1px solid #eee;
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+.resetTimeHeader {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.resetTimeDescription {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin: 5px 0px 20px 0px;
+}
+
+.timeInputContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.timeInputGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timeInputLabel {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+}
+
+.timeInput {
+  width: 60px;
+  height: 40px;
+  text-align: center;
+  font-size: 1.2rem;
+  border: 1px solid #ddd;
+  background: white;
+  color: #34495e;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.timeSeparator {
+  font-size: 1.5rem;
+  color: #7f8c8d;
+  align-self: center;
+}
+
+.saveButton {
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.countGroup > .saveButton {
+  background-color: #5e5e5e;
+  color: white;
+}
+.resetTimeSection > .saveButton {
+  background-color: #5e5e5e;
+  color: white;
+}
+
+.saveButton:hover {
+  background-color: #333;
+}
+
+.saveButton:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.saveMessage {
+  margin-top: 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: #e7f5ff;
+  color: #3498db;
 }

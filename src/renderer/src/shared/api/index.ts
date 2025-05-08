@@ -5,10 +5,12 @@ import {
   readApcConfig,
   readEventConfig,
   updateRuleLine,
-  updateEventConfig
+  updateEventConfig,
+  updateSettingCount
 } from './apc-api'
 import { readAllArea, readAllCctv } from './cctv-api'
 import { getRefresh } from './pomit-api'
+import { readPods, deletePod } from './app-manage-api'
 
 export {
   readHumanDetectConfig,
@@ -21,5 +23,8 @@ export {
   updateEventConfig,
   readAllArea,
   readAllCctv,
-  getRefresh
+  updateSettingCount,
+  getRefresh,
+  readPods,
+  deletePod
 }

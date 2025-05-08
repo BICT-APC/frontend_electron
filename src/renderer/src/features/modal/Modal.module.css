@@ -29,6 +29,7 @@
   min-height: 150px;
   overflow: auto;
   box-sizing: border-box;
+  overscroll-behavior-x: none;
 }
 
 .closeButton {

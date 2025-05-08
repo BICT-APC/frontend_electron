@@ -15,5 +15,6 @@ export const {
   readApcConfig,
   readEventConfig,
   updateRuleLine,
-  updateEventConfig
+  updateEventConfig,
+  updateSettingCount
 } = apcService(apcClient)
