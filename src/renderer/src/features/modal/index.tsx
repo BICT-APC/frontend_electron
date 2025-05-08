@@ -6,11 +6,10 @@ interface ModalProps {
   isOpen: boolean
   onClose: () => void
   header?: ModalType
-  logBox?: React.ReactNode
   contentBox?: React.ReactNode
 }
 
-export const Modal = ({ isOpen, onClose, logBox, contentBox, header }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, contentBox, header }: ModalProps) => {
   if (!isOpen) return null
 
   return (
@@ -22,7 +21,6 @@ export const Modal = ({ isOpen, onClose, logBox, contentBox, header }: ModalProp
         aria-modal="true"
       >
         {header && <div className={styles.header}>{header}</div>}
-        {logBox && <div className={styles.logBox}>{logBox}</div>}
         {contentBox && <div className={styles.content}>{contentBox}</div>}
       </div>
     </div>

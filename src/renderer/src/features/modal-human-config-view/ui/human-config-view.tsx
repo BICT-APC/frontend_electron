@@ -1,6 +1,8 @@
 import styles from './human-config-view.module.css'
 import { useHumanConfigForm } from '../lib/use-human-config-form'
 import { useEffect, useState } from 'react'
+import { ModalLogView } from '../../modal-log-view'
+import { ModalType, useModalState } from '../../../shared/modal'
 
 interface HumanConfigViewProps {
   cctvId: number
@@ -21,6 +23,8 @@ export const HumanConfigView = ({ cctvId }: HumanConfigViewProps) => {
     handleSaveConfig
   } = useHumanConfigForm({ cctvId })
 
+  const modalState = useModalState()
+
   const [confValue, setConfValue] = useState<number>(0.5)
   const [iouValue, setIouValue] = useState<number>(0.5)
   const [imgszValue, setImgszValue] = useState<number>(640)
@@ -35,6 +39,9 @@ export const HumanConfigView = ({ cctvId }: HumanConfigViewProps) => {
 
   return (
     <div className={styles.configContainer}>
+      <div>
+        {modalState.modalState === ModalType.HumanConfig && <ModalLogView cctvId={cctvId!} />}
+      </div>
       <div className={styles.configHeader}>지능형 카메라 설정</div>
       <div className={styles.configGroup}>
         <div className={styles.configItem}>

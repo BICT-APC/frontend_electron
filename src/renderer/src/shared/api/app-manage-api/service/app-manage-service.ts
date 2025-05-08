@@ -1,9 +1,9 @@
 import { AxiosInstance } from 'axios'
 import { POD_LOGS, POD_DETAIL, READ_DEPLOYMENTS } from '../../../constants/paths'
-import type { DeployDto, DeployListDto } from '../dto/responsePodsDto'
+import type { Deploy, DeployList } from '../../../types/app-manage'
 
 export const appManageService = (appManageClient: AxiosInstance) => {
-  const readPods = async (): Promise<DeployListDto> => {
+  const readPods = async (): Promise<DeployList> => {
     try {
       const response = await appManageClient.get(READ_DEPLOYMENTS)
       return response.data
@@ -34,7 +34,7 @@ export const appManageService = (appManageClient: AxiosInstance) => {
     try {
       const deploys = await readPods()
       console.log('API Response from readPods:', deploys)
-      const deploy = deploys.deployments.find((deploy: DeployDto) => deploy.name === deployName)
+      const deploy = deploys.deployments.find((deploy: Deploy) => deploy.name === deployName)
 
       if (!deploy) {
         console.log(`${deployName} deployment not found`)
@@ -58,7 +58,7 @@ export const appManageService = (appManageClient: AxiosInstance) => {
     try {
       const deploys = await readPods()
       console.log('API Response from readPods:', deploys)
-      const deploy = deploys.deployments.find((deploy: DeployDto) => deploy.name === deployName)
+      const deploy = deploys.deployments.find((deploy: Deploy) => deploy.name === deployName)
 
       if (!deploy) {
         console.log(`${deployName} deployment not found`)
