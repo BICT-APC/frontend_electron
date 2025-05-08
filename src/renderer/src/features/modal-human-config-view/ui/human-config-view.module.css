@@ -1,10 +1,14 @@
 .configContainer {
-  margin: 0 auto;
-  width: 100%;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .configHeader {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 20px;
   color: #333;
@@ -12,23 +16,144 @@
   padding-bottom: 10px;
 }
 
-.configItem {
-  margin-bottom: 12px;
-  display: flex;
-  align-items: baseline;
-}
-
 .configGroup {
   display: flex;
 }
 
+.configItem {
+  display: flex;
+  align-items: center;
+  flex: 0.3;
+}
+.wideConfigItem {
+  flex: 0.7;
+}
+
 .configLabel {
   font-weight: bold;
-  min-width: 100px;
+  min-width: 85px;
   color: #555;
 }
 
 .configValue {
+  text-align: center;
   color: #333;
+  width: 100%;
+}
+
+/* 슬라이더 스타일 */
+.sliderContainer {
+  display: flex;
+  align-items: center;
   flex: 1;
+  gap: 10px;
+}
+
+.slider {
+  flex: 1;
+  height: 5px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #d3d3d3;
+  outline: none;
+  border-radius: 5px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #90c4ff;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: #90c4ff;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.sliderValue {
+  min-width: 50px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+}
+
+.sliderValueInput {
+  width: 60px;
+  text-align: center;
+  padding: 4px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.sliderValueInput::-webkit-outer-spin-button,
+.sliderValueInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.sliderValueInput:focus {
+  outline: none;
+  border-color: #90c4ff;
+}
+
+/* 셀렉트 스타일 */
+.selectContainer {
+  flex: 1;
+}
+
+.select {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #5e5e5e;
+}
+
+/* 저장 버튼 스타일 */
+.saveButton {
+  background-color: #5e5e5e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 10px 0;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.saveButton:hover {
+  background-color: #333;
+}
+
+/* 저장 메시지 스타일 */
+.saveMessage {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #e7f5ff;
+  color: #3498db;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
 }

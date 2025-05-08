@@ -36,6 +36,11 @@ export default defineConfig({
           // target: 'http://14.42.211.57:31000', 평택
           target: 'http://192.168.0.185:31000',
           changeOrigin: true
+        },
+        '/app-manage-api': {
+          // target: 'http://14.42.211.57:31000', 평택
+          target: 'http://192.168.0.185:31000',
+          changeOrigin: true
         }
       }
     },
