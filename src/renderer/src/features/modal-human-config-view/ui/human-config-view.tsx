@@ -2,7 +2,7 @@ import styles from './human-config-view.module.css'
 import { useHumanConfigForm } from '../lib/use-human-config-form'
 import { useEffect, useState } from 'react'
 import { ModalLogView } from '../../modal-log-view'
-import { ModalType, useModalState } from '../../../shared/modal'
+import { ModalType, useModalState } from '../../modal'
 
 interface HumanConfigViewProps {
   cctvId: number

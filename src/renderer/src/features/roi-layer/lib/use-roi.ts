@@ -4,7 +4,7 @@ import { cctvSelectStore } from '../../cctv-selecet-layer/model/cctv-selecet-sto
 import { cctvConfigStore } from '../../cctv-config-button/model/cctv-config-store'
 import { HumanDetectConfig, Roi } from '../../../shared/types/human-detect'
 import { updateHumanDetectConfig } from '../../../shared/api'
-import { humanDetectConfigStore } from '../../../entities/human-detect/human-detect-config-stroe'
+import { humanDetectConfigStore } from '../../../entities/human-detect/human-detect-config-store'
 
 interface UseRoi {
   humanDetectConfig: HumanDetectConfig

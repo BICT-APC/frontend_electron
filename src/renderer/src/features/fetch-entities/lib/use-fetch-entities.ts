@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { apcConfigStore } from '../../../entities/apc/apc-config-store'
 import { cctvStore } from '../../../entities/cctv/cctv-store'
-import { humanDetectConfigStore } from '../../../entities/human-detect/human-detect-config-stroe'
+import { humanDetectConfigStore } from '../../../entities/human-detect/human-detect-config-store'
 import {
   readAllArea,
   readAllCctv,
@@ -22,11 +22,11 @@ export const useFetchEntities = () => {
 
   const fetchEntities = useCallback(async () => {
     try {
-      const cctvResults = await readAllCctv();
-      const areaResults = await readAllArea();
+      const cctvResults = await readAllCctv()
+      const areaResults = await readAllArea()
 
-      const cctvList = cctvResults.responseCctvDtoList;
-      const areaList = areaResults.responseAreaDtoList;
+      const cctvList = cctvResults.responseCctvDtoList
+      const areaList = areaResults.responseAreaDtoList
 
       // 1. CCTV 설정
       try {
@@ -61,7 +61,7 @@ export const useFetchEntities = () => {
           .forEach((res: any, index) => {
             console.warn(`APC config failed for CCTV ID ${cctvList[index].id}:`, res.reason)
           })
-        
+
         const filteredEventConfigResults = eventConfigResults
           .filter((res) => res.status === 'fulfilled')
           .map((res: any) => ({

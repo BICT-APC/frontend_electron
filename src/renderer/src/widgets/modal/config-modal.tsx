@@ -1,6 +1,6 @@
 import { HumanConfigView } from '../../features/modal-human-config-view'
 import { Modal } from '../../features/modal'
-import { useModalState, ModalType } from '../../shared/modal'
+import { useModalState, ModalType } from '../../features/modal'
 import { ApcConfigView } from '../../features/modal-apc-config-view'
 import { AppManageView } from '../../features/modal-app-manage-view'
 

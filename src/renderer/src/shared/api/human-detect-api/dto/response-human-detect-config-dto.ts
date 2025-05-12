@@ -2,6 +2,7 @@ export interface ResponseHumanDetectConfigDto {
   id: number
   rtspUrl: string
   cctvId: number
+  isActivate: boolean
   conf: number
   iou: number
   imgsz: number

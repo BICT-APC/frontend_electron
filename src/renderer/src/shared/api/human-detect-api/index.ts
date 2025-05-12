@@ -11,5 +11,7 @@ const humanDetectClient = axios.create({
 
 export const {
   readHumanDetectConfig,
-  updateHumanDetectConfig
+  updateHumanDetectConfig,
+  activateHumanDetect,
+  deactivateHumanDetect
 } = humanDetectService(humanDetectClient)
