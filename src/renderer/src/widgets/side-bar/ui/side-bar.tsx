@@ -4,7 +4,7 @@ import { cctvStore } from '../../../entities/cctv/cctv-store'
 import { SideBarCctvBox } from '../../../features/side-bar-cctv-box/ui/side-bar-cctv-box'
 import { SideBarAreaBox } from '../../../features/side-bar-area-box'
 import { useApcData } from '../lib/use-apc-data'
-import { useModalState } from '../../../shared/modal'
+import { useModalState } from '../../../features/modal'
 
 export const SideBar = () => {
   const { cctvList, areaList } = cctvStore()

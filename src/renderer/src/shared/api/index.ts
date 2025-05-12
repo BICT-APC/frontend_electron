@@ -1,4 +1,9 @@
-import { readHumanDetectConfig, updateHumanDetectConfig } from './human-detect-api'
+import {
+  activateHumanDetect,
+  deactivateHumanDetect,
+  readHumanDetectConfig,
+  updateHumanDetectConfig
+} from './human-detect-api'
 import {
   readApc,
   readApcLog,
@@ -15,6 +20,8 @@ import { readPodLogs, readPods, deletePod } from './app-manage-api'
 export {
   readHumanDetectConfig,
   updateHumanDetectConfig,
+  activateHumanDetect,
+  deactivateHumanDetect,
   readApc,
   readApcLog,
   readApcConfig,

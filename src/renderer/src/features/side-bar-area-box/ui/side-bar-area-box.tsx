@@ -1,4 +1,4 @@
-import { useModalState } from '../../../shared/modal'
+import { useModalState } from '../../modal'
 import styles from './side-bar-area-box.module.css'
 import { ApcData } from '../../../shared/types/apc'
 

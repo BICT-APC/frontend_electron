@@ -1,5 +1,5 @@
 import { apcConfigStore } from '../../entities/apc/apc-config-store'
-import { humanDetectConfigStore } from '../../entities/human-detect/human-detect-config-stroe'
+import { humanDetectConfigStore } from '../../entities/human-detect/human-detect-config-store'
 import { CctvSelectLayer } from '../../features/cctv-selecet-layer'
 import { Player } from '../../features/player'
 import { RoiLayer } from '../../features/roi-layer'

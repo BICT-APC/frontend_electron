@@ -28,6 +28,8 @@ export const HUMAN_DETECT_API_URL =
 
 export const READ_HUMAN_DETECT_CONFIG = '/api/human_detect_config/read/'
 export const UPDATE_HUMAN_DETECT_CONFIG = '/api/human_detect_config/update/'
+export const ACTIVATE_HUMAN_DETECT = '/api/human_detect_config/activate/by_cctv_id/'
+export const DEACTIVATE_HUMAN_DETECT = '/api/human_detect_config/deactivate/by_cctv_id/'
 
 export const POMIT_API_URL = import.meta.env.VITE_POMIT_API_URL || `${BASE_URL}/pomit-api`
 export const GET_REFRESH = '/api/pomit/refresh'
