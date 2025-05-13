@@ -28,5 +28,5 @@ if (process.contextIsolated) {
   // @ts-ignore (define in dts)
   window.api = api
   // @ts-ignore (define in dts)
-  window.electronToken = electronToken
+  // window.electronToken = electronToken
 }
