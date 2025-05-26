@@ -15,20 +15,20 @@ interface UseRuleLine {
     rectRef: React.RefObject<Konva.Rect | null>
     groupRefs: React.RefObject<(Konva.Group | null)[]>
     circleRefs: React.RefObject<(Konva.Circle | null)[]>
-  },
+  }
   states: {
-    reSizedLineList: RuleLine[] | null,
+    reSizedLineList: RuleLine[] | null
     setReSizedLineList: React.Dispatch<React.SetStateAction<RuleLine[] | null>>
-    isCreating: number | null,
-    setIsCreating: React.Dispatch<React.SetStateAction<number | null>>,
-    selectedLine: number | null,
+    isCreating: number | null
+    setIsCreating: React.Dispatch<React.SetStateAction<number | null>>
+    selectedLine: number | null
     setSelectedLine: React.Dispatch<React.SetStateAction<number | null>>
   }
 }
 
 export const useRuleLine = ({ ruleLineList, cctvId, size, refs, states }: UseRuleLine) => {
   const { width, height } = size
-  const { 
+  const {
     reSizedLineList,
     setReSizedLineList,
     isCreating,
@@ -40,7 +40,7 @@ export const useRuleLine = ({ ruleLineList, cctvId, size, refs, states }: UseRul
   const originalHeight = 1080
 
   const { layerRef, rectRef, groupRefs, circleRefs } = refs
-  const { isRuleLineSetting, ruleLineSaveFlag, setRuleLineSaveFlag } = cctvConfigStore();
+  const { isRuleLineSetting, ruleLineSaveFlag, setRuleLineSaveFlag } = cctvConfigStore()
   const { selectedCctvId } = cctvSelectStore()
   const { apcConfigList, setApcConfigList } = apcConfigStore()
 
@@ -67,22 +67,22 @@ export const useRuleLine = ({ ruleLineList, cctvId, size, refs, states }: UseRul
     if (!layerRef.current) {
       return
     }
-  
+
     // 항상 레이어 맨 위로 올림
     layerRef.current.moveToTop()
-  
+
     // 선택된 선이 있을 경우
     if (selectedLine !== null) {
       rectRef.current?.moveToTop()
       groupRefs.current[selectedLine]?.moveToTop()
       circleRefs.current.forEach((circle) => circle?.moveToTop())
-    } 
+    }
     // 새로 생성 중인 경우
     else if (isCreating) {
       rectRef.current?.moveToTop()
       groupRefs.current.forEach((group) => group?.moveToTop())
       circleRefs.current.forEach((circle) => circle?.moveToTop())
-    } 
+    }
     // 아무 것도 선택 안된 경우
     else {
       rectRef.current?.moveToTop()
@@ -126,12 +126,10 @@ export const useRuleLine = ({ ruleLineList, cctvId, size, refs, states }: UseRul
     if (!reSizedLineList) {
       return
     }
-  
-    const filtered = reSizedLineList.filter(line => line.ruleLine.length > 0)
+
+    const filtered = reSizedLineList.filter((line) => line.ruleLine.length > 0)
     if (filtered.length !== reSizedLineList.length) {
       setReSizedLineList(filtered)
     }
   }, [reSizedLineList])
-
-
 }

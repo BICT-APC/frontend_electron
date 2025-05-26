@@ -1,5 +1,5 @@
-export const BASE_URL = import.meta.env.VITE_BASE_URL || ''
-// const BASE_URL = import.meta.env.VITE_BASE_URL || '14.42.211.57:31000'
+// export const BASE_URL = import.meta.env.VITE_BASE_URL || ''
+const BASE_URL = import.meta.env.VITE_BASE_URL || 'http://10.133.110.50:31000'
 
 export const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL || `${BASE_URL}/auth-api`
 

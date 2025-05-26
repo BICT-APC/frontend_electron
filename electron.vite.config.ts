@@ -16,11 +16,9 @@ export default defineConfig({
   renderer: {
     server: {
       host: '0.0.0.0',
-      port: 5123,
       proxy: {
         '/auth-api': {
           target: `http://${baseUrl}`,
-          // target: 'http://14.42.211.57:31000', // 평택
           changeOrigin: true
         },
         '/cctv-api': {

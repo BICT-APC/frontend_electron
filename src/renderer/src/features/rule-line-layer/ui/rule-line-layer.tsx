@@ -24,15 +24,14 @@ export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
   const [isCreating, setIsCreating] = useState<number | null>(null)
   const [selectedLine, setSelectedLine] = useState<number | null>(null)
   const [onPointDrag, setOnPointDrag] = useState<boolean>(false)
-  
+
   const { cctvId, ruleLineList } = apcConfig
   const { selectedCctvId } = cctvSelectStore()
   const { isRuleLineSetting } = cctvConfigStore()
-  
+
   const ref = useRef<HTMLDivElement | null>(null)
   const { width = 0, height = 0 } = useResizeObserver({ ref: ref as React.RefObject<HTMLElement> })
 
-  
   const {
     backgroundClickHandler,
     lineClickHandler,
@@ -88,8 +87,6 @@ export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
     return [midX, midY, midX + ndx, midY + ndy]
   }
 
-  
-
   return (
     <div
       className={styles.wrapper}
@@ -108,7 +105,9 @@ export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
           />
           {reSizedLineList?.map((lineObj, lineIndex) => (
             <Group
-              ref={(ref) => {groupRefs.current[lineIndex] = ref}}
+              ref={(ref) => {
+                groupRefs.current[lineIndex] = ref
+              }}
               key={`${cctvId}-group-${lineIndex}`}
               draggable={!isCreating && selectedLine === lineIndex}
               onClick={() => lineClickHandler(lineIndex)}
@@ -128,7 +127,7 @@ export const RuleLineLayer = ({ apcConfig }: RuleLineLayerProps) => {
                   setIsCreating(null)
                 }}
               />
-              {(isCreating === lineIndex || selectedLine === lineIndex ) &&
+              {(isCreating === lineIndex || selectedLine === lineIndex) &&
                 lineObj.ruleLine.map((p, i) => (
                   <Circle
                     ref={(ref) => {

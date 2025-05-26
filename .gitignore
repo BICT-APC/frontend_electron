@@ -6,3 +6,4 @@ out
 *.log*
 build
 .env
+*.tar
